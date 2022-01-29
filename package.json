@@ -1,0 +1,27 @@
+{
+  "name": "remember-me-finance",
+  "version": "1.0.0",
+  "description": "TCC Project about finance solution and remember user about your expenditure",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NiltonSousa/remember-me-finance.git"
+  },
+  "author": "Nilton Sousa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NiltonSousa/remember-me-finance/issues"
+  },
+  "homepage": "https://github.com/NiltonSousa/remember-me-finance#readme",
+  "dependencies": {
+    "express": "^4.17.2",
+    "jest": "^27.4.7",
+    "sequelize": "^6.15.0",
+    "sqlite3": "^5.0.2",
+    "ts-node": "^10.4.0",
+    "typescript": "^4.5.5"
+  }
+}
