@@ -1,0 +1,15 @@
+version: "3"
+services:
+  postgres:
+    container_name: postgres-api-pdv
+    image: postgres:12-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres:/var/lib/postgresql/data
+      - ./scripts/postgres-dev-init.sql:/docker-entrypoint-initdb.d/postgres-dev-init.sql
+volumes:
+  postgres:
