@@ -6,5 +6,5 @@ export interface IInsertBillUseCase {
 
 export namespace IInsertBillUseCase {
     export type Params = Bill;
-    export type Result = Promise<Bill>;
+    export type Result = Promise<Bill | null>;
 }
