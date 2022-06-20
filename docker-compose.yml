@@ -1,7 +1,7 @@
 version: "3"
 services:
   postgres:
-    container_name: postgres-api-pdv
+    container_name: postgres-api
     image: postgres:12-alpine
     environment:
       POSTGRES_USER: postgres
