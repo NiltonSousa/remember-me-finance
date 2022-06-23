@@ -3,10 +3,11 @@ import { insertBillController } from "@/web/factories/assemble/controllers/inser
 // import { Router } from "express";
 import Router from "koa-router";
 import koaBody from "koa-body";
+import { updateBillController } from "@/web/factories/assemble/controllers/updateBill";
 
 const router = new Router();
 const adapter = new KoaRequestAdapter();
-// router.use(koaBody());
 router.post('/insert', koaBody(), adapter.adapt(insertBillController));
+router.put('/update', koaBody(), adapter.adapt(updateBillController));
 
 export const billRouter = router.routes();

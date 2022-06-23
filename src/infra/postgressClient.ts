@@ -23,4 +23,15 @@ export class PostgresClient {
         }
         return  null;
     }
+
+
+    async update(bill: Bill) {
+        const { name, value, expireDate } = bill;
+        const rows =  await this.pool.query("UPDATE bill SET name=$1, value=$2, expireDate=$3 WHERE name=$1", [name, value, expireDate]);
+
+        if(rows) {
+            return bill!
+        }
+        return  null;
+    }
 }
