@@ -14,6 +14,6 @@ describe("Insert bill controller", () => {
 
     const httpResponse = await controller.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual("params name is not provided");
+    expect(httpResponse.body).toEqual("param name is not provided");
   });
 });
