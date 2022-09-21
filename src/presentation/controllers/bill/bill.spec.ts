@@ -1,7 +1,7 @@
 import { InsertBillController } from "./insert-bill";
 
 describe("Insert bill controller", () => {
-  it("Should return 400 if no name is provided", () => {
+  it("Should return 400 if no name is provided", async () => {
     const controller = new InsertBillController();
 
     const httpRequest = {
@@ -12,7 +12,7 @@ describe("Insert bill controller", () => {
       },
     };
 
-    const httpResponse = controller.handle(httpRequest);
+    const httpResponse = await controller.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual("params name is not provided");
   });
