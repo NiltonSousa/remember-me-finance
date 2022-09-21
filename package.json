@@ -4,7 +4,7 @@
   "description": "TCC Project about finance solution and remember user about your expenditure",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
@@ -23,5 +23,9 @@
     "sqlite3": "^5.0.2",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.0.3",
+    "ts-jest": "^29.0.1"
   }
 }
