@@ -1,5 +1,7 @@
+import { MissingParamError } from "../../errors/missing-param-error";
+import { badResquest } from "../../helpers/http-helper";
 import { Controller } from "../../protocols/controller";
-import { HttpRequest, HttpResponse } from "../../protocols/http";
+import { HttpRequest } from "../../protocols/http";
 
 export class InsertBillController implements Controller {
   async handle(httpRequest: HttpRequest) {
@@ -12,9 +14,6 @@ function verifyFields(httpRequest: HttpRequest) {
 
   for (const field of requiredFields) {
     if (!httpRequest.body[field])
-      return {
-        statusCode: 400,
-        body: `param ${field} is not provided`,
-      };
+      return badResquest(new MissingParamError(field));
   }
 }

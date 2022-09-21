@@ -1,3 +1,4 @@
+import { MissingParamError } from "../../errors/missing-param-error";
 import { InsertBillController } from "./insert-bill";
 
 describe("Insert bill controller", () => {
@@ -14,7 +15,7 @@ describe("Insert bill controller", () => {
 
     const httpResponse = await controller.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual("param name is not provided");
+    expect(httpResponse.body).toEqual(new MissingParamError("name"));
   });
 
   it("Should return 400 if no value is provided", async () => {
@@ -30,7 +31,7 @@ describe("Insert bill controller", () => {
 
     const httpResponse = await controller.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual("param value is not provided");
+    expect(httpResponse.body).toEqual(new MissingParamError("value"));
   });
 
   it("Should return 400 if no expireDate is provided", async () => {
@@ -46,7 +47,7 @@ describe("Insert bill controller", () => {
 
     const httpResponse = await controller.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual("param expireDate is not provided");
+    expect(httpResponse.body).toEqual(new MissingParamError("expireDate"));
   });
 
   it("Should return 400 if no daysBeforeRemember is provided", async () => {
@@ -63,7 +64,7 @@ describe("Insert bill controller", () => {
     const httpResponse = await controller.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(
-      "param daysBeforeRemember is not provided"
+      new MissingParamError("daysBeforeRemember")
     );
   });
 });
