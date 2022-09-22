@@ -1,5 +1,7 @@
-export interface Bill {
-    name: string;
-    value: string;
-    expireDate: Date | null;
+export interface BillModel {
+  id: string;
+  name: string;
+  value: string;
+  expireDate: string;
+  daysBeforeExpireDateToRemember: string;
 }
