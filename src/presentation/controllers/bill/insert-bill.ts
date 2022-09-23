@@ -1,6 +1,6 @@
 import { InsertBill } from "../../../domain/usecases/insert-bill";
 import { MissingParamError } from "../../errors/missing-param-error";
-import { badResquest, ok } from "../../helpers/http-helper";
+import { badResquest, ok, serverError } from "../../helpers/http-helper";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/http";
 
@@ -37,10 +37,7 @@ export class InsertBillController implements Controller {
 
       return ok(bill);
     } catch (error) {
-      return {
-        statusCode: 500,
-        body: new Error("Internal server error"),
-      };
+      return serverError();
     }
   }
 }

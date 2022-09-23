@@ -4,6 +4,7 @@ import {
   InsertBillModel,
 } from "../../../domain/usecases/insert-bill";
 import { MissingParamError } from "../../errors/missing-param-error";
+import { serverError } from "../../helpers/http-helper";
 import { InsertBillController } from "./insert-bill";
 
 const makeInsertBill = () => {
@@ -145,9 +146,6 @@ describe("Insert bill controller", () => {
 
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(500);
-    expect(httpResponse).toEqual({
-      statusCode: 500,
-      body: new Error("Internal server error"),
-    });
+    expect(httpResponse).toEqual(serverError());
   });
 });
