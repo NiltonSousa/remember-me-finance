@@ -1,6 +1,6 @@
 import { InsertBill } from "../../../domain/usecases/insert-bill";
 import { MissingParamError } from "../../errors/missing-param-error";
-import { badResquest } from "../../helpers/http-helper";
+import { badResquest, ok } from "../../helpers/http-helper";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/http";
 
@@ -34,9 +34,6 @@ export class InsertBillController implements Controller {
       daysBeforeExpireDateToRemember,
     });
 
-    return {
-      statusCode: 200,
-      body: bill,
-    };
+    return ok(bill);
   }
 }
