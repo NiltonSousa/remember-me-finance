@@ -12,28 +12,35 @@ export class InsertBillController implements Controller {
   }
 
   async handle(httpRequest: HttpRequest) {
-    const requiredFields = [
-      "name",
-      "value",
-      "expireDate",
-      "daysBeforeExpireDateToRemember",
-    ];
+    try {
+      const requiredFields = [
+        "name",
+        "value",
+        "expireDate",
+        "daysBeforeExpireDateToRemember",
+      ];
 
-    for (const field of requiredFields) {
-      if (!httpRequest.body[field])
-        return badResquest(new MissingParamError(field));
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field])
+          return badResquest(new MissingParamError(field));
+      }
+
+      const { name, value, expireDate, daysBeforeExpireDateToRemember } =
+        httpRequest.body;
+
+      const bill = await this.insertBill.insert({
+        name,
+        value,
+        expireDate,
+        daysBeforeExpireDateToRemember,
+      });
+
+      return ok(bill);
+    } catch (error) {
+      return {
+        statusCode: 500,
+        body: new Error("Internal server error"),
+      };
     }
-
-    const { name, value, expireDate, daysBeforeExpireDateToRemember } =
-      httpRequest.body;
-
-    const bill = await this.insertBill.insert({
-      name,
-      value,
-      expireDate,
-      daysBeforeExpireDateToRemember,
-    });
-
-    return ok(bill);
   }
 }
