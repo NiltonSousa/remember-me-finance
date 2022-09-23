@@ -22,13 +22,19 @@ const makeInsertBill = () => {
   return new InsertBillStub();
 };
 
-const makeSut = () => {
+export interface SutTypes {
+  sut: InsertBillController;
+  insertBillStub: InsertBill;
+}
+
+const makeSut = (): SutTypes => {
   const insertBillStub = makeInsertBill();
 
   const sut = new InsertBillController(insertBillStub);
 
   return {
     sut,
+    insertBillStub,
   };
 };
 describe("Insert bill controller", () => {
@@ -118,6 +124,30 @@ describe("Insert bill controller", () => {
       value: "valid_value",
       expireDate: "01/01/1999",
       daysBeforeExpireDateToRemember: "5",
+    });
+  });
+
+  it("Should return 500 if InsertBillController throws", async () => {
+    const { sut, insertBillStub } = makeSut();
+
+    jest.spyOn(insertBillStub, "insert").mockImplementationOnce(() => {
+      return new Promise((resolver, reject) => reject(new Error()));
+    });
+
+    const httpRequest = {
+      body: {
+        name: "valid_name",
+        value: "valid_value",
+        expireDate: "01/01/1999",
+        daysBeforeExpireDateToRemember: "5",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse).toEqual({
+      statusCode: 500,
+      body: new Error("Internal server error"),
     });
   });
 });
