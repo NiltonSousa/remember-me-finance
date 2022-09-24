@@ -1,2 +1,1 @@
-export * from "./insertBill";
-export * from "./updateBill";
+export * from "./insert-bill";
