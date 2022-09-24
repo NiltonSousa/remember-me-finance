@@ -79,4 +79,25 @@ describe("DbInsertBill usecase", () => {
       daysBeforeExpireDateToRemember: "5",
     });
   });
+
+  it("Should return an bill when success", async () => {
+    const { sut } = makeSut();
+
+    const billData = {
+      name: "valid_name",
+      value: "50",
+      expireDate: "01/01/1999",
+      daysBeforeExpireDateToRemember: "5",
+    };
+
+    const bill = await sut.insert(billData);
+
+    expect(bill).toEqual({
+      id: "valid_id",
+      name: "valid_name",
+      value: "50",
+      expireDate: "01/01/1999",
+      daysBeforeExpireDateToRemember: "5",
+    });
+  });
 });
