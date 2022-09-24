@@ -12,7 +12,7 @@ export class DbInsertBill implements InsertBillModel {
     this.insertBillRepository = inserBillRepository;
   }
 
-  insert(bill: DbInsertBillModel): Promise<BillModel> {
-    return new Promise((resolve, reject) => reject(new Error()));
+  async insert(billData: DbInsertBillModel): Promise<BillModel> {
+    return await this.insertBillRepository.insert(billData);
   }
 }
