@@ -1,13 +1,21 @@
-import sqlite3 from "sqlite3";
+import { sequelize } from "../helpers/database";
+const { DataTypes } = require("sequelize");
 
-export const SQliteHelper = {
-  client: null as sqlite3.Database,
-
-  async connect(url: string) {
-    return (this.client = new sqlite3.Database(url));
+export const Bill = sequelize.define("Bills", {
+  name: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-
-  async disconnect() {
-    await this.client.close();
+  value: {
+    type: DataTypes.STRING,
+    allowNull: false,
   },
-};
+  expireDate: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  daysBeforeExpireDateToRemember: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+});
