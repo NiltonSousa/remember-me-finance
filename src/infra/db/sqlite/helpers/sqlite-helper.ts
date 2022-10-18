@@ -1,5 +1,10 @@
-import { sequelize } from "../helpers/database";
+import { Sequelize } from "sequelize";
 const { DataTypes } = require("sequelize");
+
+export const sequelize = new Sequelize({
+  dialect: "sqlite",
+  storage: "./database.sqlite",
+});
 
 export const Bill = sequelize.define("Bills", {
   name: {

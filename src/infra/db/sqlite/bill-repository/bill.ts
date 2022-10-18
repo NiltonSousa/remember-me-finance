@@ -3,7 +3,7 @@ import {
   DbInsertBillModel,
   InsertBillRepository,
 } from "../../../../data/protocols/index";
-import { sequelize } from "../helpers/database";
+import { sequelize } from "../helpers/sqlite-helper";
 import { Bill } from "../helpers/sqlite-helper";
 import { map } from "./bill-mapper";
 
