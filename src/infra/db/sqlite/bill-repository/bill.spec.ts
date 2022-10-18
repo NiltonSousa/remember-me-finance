@@ -1,8 +1,17 @@
 import { BillSqliteRepository } from "./bill";
+import { sequelize } from "../helpers/sqlite-helper";
+
+const makeSut = () => {
+  return new BillSqliteRepository();
+};
 
 describe("Bill sqlite repository", () => {
+  beforeAll(async () => {
+    await sequelize.sync();
+  });
+
   it("Should return a bill on success", async () => {
-    const sut = new BillSqliteRepository();
+    const sut = makeSut();
 
     return await sut
       .insert({
