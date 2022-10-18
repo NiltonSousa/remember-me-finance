@@ -5,25 +5,19 @@ import {
 } from "../../../../data/protocols/index";
 import { sequelize } from "../helpers/database";
 import { Bill } from "../helpers/sqlite-helper";
+import { map } from "./bill-mapper";
 
 export class BillSqliteRepository implements InsertBillRepository {
   async insert(bill: DbInsertBillModel): Promise<BillModel> {
-    const resultado = await sequelize.sync();
+    await sequelize.sync();
 
-    const resultadoCreate = await Bill.create({
-      name: "valid_name",
-      value: "50",
-      expireDate: "01/01/1999",
-      daysBeforeExpireDateToRemember: "5",
-    });
-    console.log(resultadoCreate);
+    const result = (await Bill.create({
+      name: bill.name,
+      value: bill.value,
+      expireDate: bill.expireDate,
+      daysBeforeExpireDateToRemember: bill.daysBeforeExpireDateToRemember,
+    })) as any;
 
-    return {
-      id: "valid_id",
-      name: "valid_name",
-      value: "50",
-      expireDate: "01/01/1999",
-      daysBeforeExpireDateToRemember: "5",
-    };
+    return map(bill, result);
   }
 }
