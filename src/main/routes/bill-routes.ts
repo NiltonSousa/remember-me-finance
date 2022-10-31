@@ -2,5 +2,5 @@ import { Router } from "express";
 
 export const billRouter = Router();
 billRouter.post("/bill", (req, res) => {
-  res.json({ ok: "ok" });
+  res.json(req.body);
 });
