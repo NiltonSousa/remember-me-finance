@@ -13,6 +13,8 @@ export const SqliteHelper = {
         dialect: "sqlite",
         storage: uri,
       });
+      this.generateTableBills();
+      this.bill.sync();
     }
   },
 

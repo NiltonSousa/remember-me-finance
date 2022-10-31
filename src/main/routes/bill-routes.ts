@@ -1,6 +1,6 @@
 import { Router } from "express";
+import { adaptRoute } from "../adapters/express-route-adapter";
+import { makeInsertBillController } from "../factories/bill";
 
 export const billRouter = Router();
-billRouter.post("/bill", (req, res) => {
-  res.json(req.body);
-});
+billRouter.post("/bill", adaptRoute(makeInsertBillController()));
