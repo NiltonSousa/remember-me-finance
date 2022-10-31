@@ -5,11 +5,14 @@ export const SqliteHelper = {
   client: null as any,
   bill: null as any,
 
-  connect(uri?: string) {
+  async connect(uri?: string) {
     if (!uri) {
       this.client = new Sequelize("sqlite::memory:");
     } else {
-      this.client = new Sequelize(uri);
+      this.client = new Sequelize({
+        dialect: "sqlite",
+        storage: uri,
+      });
     }
   },
 
