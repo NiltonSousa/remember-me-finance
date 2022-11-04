@@ -7,9 +7,7 @@ const makeSut = () => {
 
 describe("Bill sqlite repository", () => {
   beforeAll(async () => {
-    SqliteHelper.connect();
-    SqliteHelper.generateTableBills();
-    await SqliteHelper.bill.sync();
+    SqliteHelper.connect("test");
   });
 
   it("Should return a bill on success", async () => {

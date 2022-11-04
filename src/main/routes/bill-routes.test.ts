@@ -5,9 +5,7 @@ import app from "../config/app";
 
 describe("Bill Routes", () => {
   beforeAll(async () => {
-    SqliteHelper.connect();
-    SqliteHelper.generateTableBills();
-    await SqliteHelper.bill.sync();
+    SqliteHelper.connect("test");
   });
 
   it("Should return an bill on success", async () => {
