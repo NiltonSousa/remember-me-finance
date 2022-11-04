@@ -1,15 +1,13 @@
 version: "3"
 services:
-  postgres:
-    container_name: postgres-api
-    image: postgres:12-alpine
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-    ports:
-      - "5432:5432"
+  sqlite3:
+    container_name: sqlite3_container
+    image: nouchka/sqlite3:latest
+    stdin_open: true
+    tty: true
     volumes:
-      - postgres:/var/lib/postgresql/data
-      - ./scripts/postgres-dev-init.sql:/docker-entrypoint-initdb.d/postgres-dev-init.sql
-volumes:
-  postgres:
+      #Modify following line
+      - ./db/:/root/db/
+    ports:
+      - "9000:9000" # expose ports - HOST:CONTAINER
+    restart: unless-stopped
