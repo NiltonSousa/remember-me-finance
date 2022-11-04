@@ -1,40 +1,33 @@
-import { Sequelize } from "sequelize";
-const { DataTypes } = require("sequelize");
+import { PrismaClient } from "@prisma/client";
+import { DbInsertBillModel } from "../../../../data/protocols";
+import setEnv from "../../../../main/config/env";
 
 export const SqliteHelper = {
   client: null as any,
   bill: null as any,
 
-  async connect(uri?: string) {
-    if (!uri) {
-      this.client = new Sequelize("sqlite::memory:");
-    } else {
-      this.client = new Sequelize({
-        dialect: "sqlite",
-        storage: uri,
+  async connect(type?: string) {
+    if (type == "test") {
+      process.env.DATABASE_URL = setEnv.sqliteUrlTest;
+      this.client = new PrismaClient({
+        log: ["query"],
       });
-      this.generateTableBills();
-      this.bill.sync();
+    } else {
+      process.env.DATABASE_URL = setEnv.sqliteUrl;
+      this.client = new PrismaClient({
+        log: ["query"],
+      });
     }
   },
 
-  generateTableBills() {
-    this.bill = this.client.define("Bills", {
-      name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      value: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      expireDate: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      daysBeforeExpireDateToRemember: {
-        type: DataTypes.STRING,
-        allowNull: false,
+  async createBill(bill: DbInsertBillModel) {
+    const { name, value, expireDate, daysBeforeExpireDateToRemember } = bill;
+    await this.client.bill.create({
+      data: {
+        name,
+        value,
+        expireDate,
+        daysBeforeExpireDateToRemember,
       },
     });
   },
