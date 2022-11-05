@@ -1,4 +1,4 @@
-import { DbInsertBillModel } from "../../../../data/protocols/insert-bill-model-protocol";
+import { DbInsertBillModel } from "../../../../data/protocols/bill-model-protocol";
 import { BillModel } from "../../../../domain/models";
 
 export const map = (

@@ -15,3 +15,7 @@ export interface DbInsertBillModel {
 export interface InsertBillModel {
   insert(bill: DbInsertBillModel): Promise<BillModel>;
 }
+
+export interface ListBillModel {
+  list(clientId: string): Promise<Array<BillModel>>;
+}
