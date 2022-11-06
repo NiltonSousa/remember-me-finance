@@ -201,4 +201,22 @@ describe("List bill controller", () => {
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError("clientId"));
   });
+
+  it("Should return 500 if ListBillController throws", async () => {
+    const { sut, listBillStub } = makeSutList();
+
+    jest.spyOn(listBillStub, "list").mockImplementationOnce(() => {
+      return new Promise((resolver, reject) => reject(new Error()));
+    });
+
+    const httpRequest = {
+      queryParams: {
+        clientId: "valid_id",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse).toEqual(serverError());
+  });
 });
