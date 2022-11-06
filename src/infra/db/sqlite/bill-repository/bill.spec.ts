@@ -1,6 +1,10 @@
 import { InsertBillSqliteRepository } from "./insert-bill";
 import { ListBillSqliteRepository } from "./list-bill";
 import { SqliteHelper } from "../helpers/sqlite-helper";
+import ShortUniqueId from "short-unique-id";
+
+const generateId = new ShortUniqueId({ length: 6 });
+const clientId = String(generateId()).toUpperCase();
 
 const makeSutInsert = () => {
   return new InsertBillSqliteRepository();
@@ -13,6 +17,15 @@ const makeSutList = () => {
 describe("Bill sqlite repository", () => {
   beforeAll(async () => {
     SqliteHelper.connect("test");
+    await SqliteHelper.createClient(
+      clientId,
+      "valid_name",
+      "12345678",
+      "19/01/1999",
+      "user@mail.com",
+      "123",
+      "4"
+    );
   });
 
   it("Should return a bill when insert is success", async () => {
@@ -21,7 +34,7 @@ describe("Bill sqlite repository", () => {
     return await sut
       .insert({
         id: "valid_id",
-        clientId: "b307e9cc-a95d-4a11-bdbd-ee8f3d0d3140",
+        clientId,
         name: "valid_name",
         value: "50",
         expireDate: "01/01/1999",
@@ -30,7 +43,7 @@ describe("Bill sqlite repository", () => {
       .then((data) => {
         console.log("alooo", data);
 
-        expect(data.clientId).toEqual("b307e9cc-a95d-4a11-bdbd-ee8f3d0d3140");
+        expect(data.clientId).toEqual(clientId);
         expect(data.name).toEqual("valid_name");
         expect(data.value).toEqual("50");
         expect(data.expireDate).toEqual("01/01/1999");
@@ -41,18 +54,12 @@ describe("Bill sqlite repository", () => {
   it("Should return a bill when list is success", async () => {
     const sut = makeSutList();
 
-    return await sut
-      .list("b307e9cc-a95d-4a11-bdbd-ee8f3d0d3140")
-      .then((data) => {
-        console.log("data ->", data);
-
-        expect(data[0].clientId).toEqual(
-          "b307e9cc-a95d-4a11-bdbd-ee8f3d0d3140"
-        );
-        expect(data[0].name).toEqual("valid_name");
-        expect(data[0].value).toEqual("50");
-        expect(data[0].expireDate).toEqual("01/01/1999");
-        expect(data[0].daysBeforeExpireDateToRemember).toEqual("5");
-      });
+    return await sut.list(clientId).then((data) => {
+      expect(data[0].clientId).toEqual(clientId);
+      expect(data[0].name).toEqual("valid_name");
+      expect(data[0].value).toEqual("50");
+      expect(data[0].expireDate).toEqual("01/01/1999");
+      expect(data[0].daysBeforeExpireDateToRemember).toEqual("5");
+    });
   });
 });
