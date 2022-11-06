@@ -1,11 +1,22 @@
+import { ListBillController, InsertBillController } from ".";
 import { BillModel } from "../../../domain/models/index";
 import {
   InsertBill,
   InsertBillModel,
-} from "../../../domain/usecases/insert-bill";
+  ListBill,
+} from "../../../domain/usecases/index";
 import { MissingParamError } from "../../errors/missing-param-error";
 import { serverError } from "../../helpers/http-helper";
-import { InsertBillController } from "./insert-bill";
+
+export interface SutTypesInsert {
+  sut: InsertBillController;
+  insertBillStub: InsertBill;
+}
+
+// export interface SutTypesList {
+//   sut: InsertBillController;
+//   insertBillStub: InsertBill;
+// }
 
 const makeInsertBill = () => {
   class InsertBillStub implements InsertBill {
@@ -23,12 +34,28 @@ const makeInsertBill = () => {
   return new InsertBillStub();
 };
 
-export interface SutTypes {
-  sut: InsertBillController;
-  insertBillStub: InsertBill;
-}
+const makeListBill = () => {
+  class ListBillStub implements ListBill {
+    list(clientId: string): Promise<Array<BillModel>> {
+      const fakeBill = [
+        {
+          id: "valid_id",
+          clientId: "valid_id",
+          name: "valid_name",
+          value: "valid_value",
+          expireDate: "01/01/1999",
+          daysBeforeExpireDateToRemember: "5",
+        },
+      ];
 
-const makeSutInsert = (): SutTypes => {
+      return new Promise((resolve) => resolve(fakeBill));
+    }
+  }
+
+  return new ListBillStub();
+};
+
+const makeSutInsert = (): SutTypesInsert => {
   const insertBillStub = makeInsertBill();
 
   const sut = new InsertBillController(insertBillStub);
@@ -36,6 +63,17 @@ const makeSutInsert = (): SutTypes => {
   return {
     sut,
     insertBillStub,
+  };
+};
+
+const makeSutList = () => {
+  const listBillStub = makeListBill();
+
+  const sut = new ListBillController(listBillStub);
+
+  return {
+    sut,
+    listBillStub,
   };
 };
 
@@ -152,5 +190,15 @@ describe("Insert bill controller", () => {
 });
 
 describe("List bill controller", () => {
-  it("", () => {});
+  it("Should return 400 if no clientId is provided", async () => {
+    const { sut } = makeSutList();
+
+    const httpRequest = {
+      queryParams: {},
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError("clientId"));
+  });
 });
