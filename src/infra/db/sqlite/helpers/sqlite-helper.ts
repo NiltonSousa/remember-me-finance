@@ -21,13 +21,52 @@ export const SqliteHelper = {
   },
 
   async createBill(bill: DbInsertBillModel) {
-    const { name, value, expireDate, daysBeforeExpireDateToRemember } = bill;
+    const {
+      clientId,
+      name,
+      value,
+      expireDate,
+      daysBeforeExpireDateToRemember,
+    } = bill;
     await this.client.bill.create({
       data: {
+        clientId,
         name,
         value,
         expireDate,
         daysBeforeExpireDateToRemember,
+      },
+    });
+  },
+
+  async listBills(clientId: string) {
+    return await this.client.bill.findMany({
+      where: {
+        clientId: {
+          equals: clientId,
+        },
+      },
+    });
+  },
+
+  async createClient(
+    id: string,
+    name: string,
+    cpf: string,
+    birthdate: string,
+    email: string,
+    phoneNumber: string,
+    billsCount: string
+  ) {
+    await this.client.client.create({
+      data: {
+        id,
+        name,
+        cpf,
+        birthdate,
+        email,
+        phoneNumber,
+        billsCount,
       },
     });
   },
