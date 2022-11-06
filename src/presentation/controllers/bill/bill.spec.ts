@@ -28,7 +28,7 @@ export interface SutTypes {
   insertBillStub: InsertBill;
 }
 
-const makeSut = (): SutTypes => {
+const makeSutInsert = (): SutTypes => {
   const insertBillStub = makeInsertBill();
 
   const sut = new InsertBillController(insertBillStub);
@@ -38,9 +38,10 @@ const makeSut = (): SutTypes => {
     insertBillStub,
   };
 };
+
 describe("Insert bill controller", () => {
   it("Should return 400 if no name is provided", async () => {
-    const { sut } = makeSut();
+    const { sut } = makeSutInsert();
 
     const httpRequest = {
       body: {
@@ -56,7 +57,7 @@ describe("Insert bill controller", () => {
   });
 
   it("Should return 400 if no value is provided", async () => {
-    const { sut } = makeSut();
+    const { sut } = makeSutInsert();
 
     const httpRequest = {
       body: {
@@ -72,7 +73,7 @@ describe("Insert bill controller", () => {
   });
 
   it("Should return 400 if no expireDate is provided", async () => {
-    const { sut } = makeSut();
+    const { sut } = makeSutInsert();
 
     const httpRequest = {
       body: {
@@ -88,7 +89,7 @@ describe("Insert bill controller", () => {
   });
 
   it("Should return 400 if no daysBeforeExpireDateToRemember is provided", async () => {
-    const { sut } = makeSut();
+    const { sut } = makeSutInsert();
 
     const httpRequest = {
       body: {
@@ -106,7 +107,7 @@ describe("Insert bill controller", () => {
   });
 
   it("Should return 200 if data is provided", async () => {
-    const { sut } = makeSut();
+    const { sut } = makeSutInsert();
 
     const httpRequest = {
       body: {
@@ -129,7 +130,7 @@ describe("Insert bill controller", () => {
   });
 
   it("Should return 500 if InsertBillController throws", async () => {
-    const { sut, insertBillStub } = makeSut();
+    const { sut, insertBillStub } = makeSutInsert();
 
     jest.spyOn(insertBillStub, "insert").mockImplementationOnce(() => {
       return new Promise((resolver, reject) => reject(new Error()));
@@ -148,4 +149,8 @@ describe("Insert bill controller", () => {
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse).toEqual(serverError());
   });
+});
+
+describe("List bill controller", () => {
+  it("", () => {});
 });
