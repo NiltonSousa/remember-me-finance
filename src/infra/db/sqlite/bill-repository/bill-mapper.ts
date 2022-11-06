@@ -5,11 +5,13 @@ export const map = (
   billData: DbInsertBillModel,
   generatedId: string
 ): Promise<BillModel> => {
-  const { name, value, expireDate, daysBeforeExpireDateToRemember } = billData;
+  const { clientId, name, value, expireDate, daysBeforeExpireDateToRemember } =
+    billData;
 
   return new Promise((resolve) =>
     resolve({
       id: generatedId,
+      clientId,
       name,
       value,
       expireDate,
