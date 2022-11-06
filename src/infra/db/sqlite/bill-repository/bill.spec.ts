@@ -1,4 +1,4 @@
-import { BillSqliteRepository } from "./bill";
+import { BillSqliteRepository } from "./insert-bill";
 import { SqliteHelper } from "../helpers/sqlite-helper";
 
 const makeSut = () => {

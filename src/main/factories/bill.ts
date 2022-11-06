@@ -1,6 +1,6 @@
 import { InsertBillController } from "../../presentation/controllers/bill/insert-bill";
 import { DbInsertBill } from "../../data/insert-bill/db-insert-bill";
-import { BillSqliteRepository } from "../../infra/db/sqlite/bill-repository/bill";
+import { BillSqliteRepository } from "../../infra/db/sqlite/bill-repository/insert-bill";
 
 export const makeInsertBillController = (): InsertBillController => {
   const billSqliteRepository = new BillSqliteRepository();
