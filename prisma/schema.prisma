@@ -17,4 +17,20 @@ model Bill {
   value                          String
   expireDate                     String
   daysBeforeExpireDateToRemember String
+  clientId                       String?
+
+  client Client? @relation(fields: [clientId], references: [id])
+}
+
+model Client {
+  id String @id @unique @default(cuid())
+
+  name        String
+  cpf         String
+  birthdate   String
+  email       String
+  phoneNumber String
+  billsCount  String
+
+  bills Bill[]
 }
