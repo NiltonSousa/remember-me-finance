@@ -219,4 +219,27 @@ describe("List bill controller", () => {
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse).toEqual(serverError());
   });
+
+  it("Should return 200 if clientId is provided", async () => {
+    const { sut } = makeSutList();
+
+    const httpRequest = {
+      queryParams: {
+        clientId: "valid_id",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual([
+      {
+        id: "valid_id",
+        clientId: "valid_id",
+        name: "valid_name",
+        value: "valid_value",
+        expireDate: "01/01/1999",
+        daysBeforeExpireDateToRemember: "5",
+      },
+    ]);
+  });
 });
