@@ -10,6 +10,7 @@ const makeInsertBillRepository = (): InsertBillRepository => {
     async insert(bill: DbInsertBillModel): Promise<BillModel> {
       const fakeBill = {
         id: "valid_id",
+        clientId: "valid_id",
         name: "valid_name",
         value: "50",
         expireDate: "01/01/1999",
@@ -47,6 +48,8 @@ describe("DbInsertBill usecase", () => {
       );
 
     const billData = {
+      id: "valid_id",
+      clientId: "valid_id",
       name: "valid_name",
       value: "50",
       expireDate: "01/01/1999",
@@ -64,6 +67,8 @@ describe("DbInsertBill usecase", () => {
     const insertSpy = jest.spyOn(insertBillRepositoryStub, "insert");
 
     const billData = {
+      id: "valid_id",
+      clientId: "valid_id",
       name: "valid_name",
       value: "50",
       expireDate: "01/01/1999",
@@ -73,6 +78,8 @@ describe("DbInsertBill usecase", () => {
     await sut.insert(billData);
 
     expect(insertSpy).toHaveBeenCalledWith({
+      id: "valid_id",
+      clientId: "valid_id",
       name: "valid_name",
       value: "50",
       expireDate: "01/01/1999",
@@ -84,6 +91,8 @@ describe("DbInsertBill usecase", () => {
     const { sut } = makeSut();
 
     const billData = {
+      id: "valid_id",
+      clientId: "valid_id",
       name: "valid_name",
       value: "50",
       expireDate: "01/01/1999",
@@ -94,6 +103,7 @@ describe("DbInsertBill usecase", () => {
 
     expect(bill).toEqual({
       id: "valid_id",
+      clientId: "valid_id",
       name: "valid_name",
       value: "50",
       expireDate: "01/01/1999",

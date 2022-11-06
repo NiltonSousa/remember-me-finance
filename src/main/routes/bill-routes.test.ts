@@ -12,6 +12,7 @@ describe("Bill Routes", () => {
     await request(app)
       .post("/bill")
       .send({
+        clientId: "valid_id",
         name: "valid_name",
         value: "50",
         expireDate: "01/01/1999",
