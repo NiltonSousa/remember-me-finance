@@ -41,8 +41,6 @@ describe("Bill sqlite repository", () => {
         daysBeforeExpireDateToRemember: "5",
       })
       .then((data) => {
-        console.log("alooo", data);
-
         expect(data.clientId).toEqual(clientId);
         expect(data.name).toEqual("valid_name");
         expect(data.value).toEqual("50");

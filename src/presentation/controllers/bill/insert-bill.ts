@@ -14,6 +14,7 @@ export class InsertBillController implements Controller {
   async handle(httpRequest: HttpRequest) {
     try {
       const requiredFields = [
+        "clientId",
         "name",
         "value",
         "expireDate",
@@ -25,10 +26,16 @@ export class InsertBillController implements Controller {
           return badResquest(new MissingParamError(field));
       }
 
-      const { name, value, expireDate, daysBeforeExpireDateToRemember } =
-        httpRequest.body;
+      const {
+        clientId,
+        name,
+        value,
+        expireDate,
+        daysBeforeExpireDateToRemember,
+      } = httpRequest.body;
 
       const bill = await this.insertBill.insert({
+        clientId,
         name,
         value,
         expireDate,

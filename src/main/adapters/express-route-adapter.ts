@@ -10,7 +10,6 @@ export const adaptRoute = (controller: Controller) => {
     const httpResquest: HttpRequest = {
       body: req.body,
     };
-
     const httpResponse: HttpResponse = await controller.handle(httpResquest);
 
     res.status(httpResponse.statusCode).json(httpResponse.body);

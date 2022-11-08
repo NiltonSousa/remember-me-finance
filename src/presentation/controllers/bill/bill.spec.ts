@@ -13,16 +13,12 @@ export interface SutTypesInsert {
   insertBillStub: InsertBill;
 }
 
-// export interface SutTypesList {
-//   sut: InsertBillController;
-//   insertBillStub: InsertBill;
-// }
-
 const makeInsertBill = () => {
   class InsertBillStub implements InsertBill {
     insert(bill: InsertBillModel): Promise<BillModel> {
       const fakeBill = {
         id: "valid_id",
+        clientId: "valid_id",
         name: "valid_name",
         value: "valid_value",
         expireDate: "01/01/1999",
@@ -83,6 +79,7 @@ describe("Insert bill controller", () => {
 
     const httpRequest = {
       body: {
+        clientId: "valid_id",
         value: "valid_value",
         expireDate: "11/01/1999",
         daysBeforeExpireDateToRemember: "5",
@@ -99,6 +96,7 @@ describe("Insert bill controller", () => {
 
     const httpRequest = {
       body: {
+        clientId: "valid_id",
         name: "valid_name",
         expireDate: "11/01/1999",
         daysBeforeExpireDateToRemember: "5",
@@ -115,6 +113,7 @@ describe("Insert bill controller", () => {
 
     const httpRequest = {
       body: {
+        clientId: "valid_id",
         name: "valid_name",
         value: "valid_value",
         daysBeforeExpireDateToRemember: "5",
@@ -131,6 +130,7 @@ describe("Insert bill controller", () => {
 
     const httpRequest = {
       body: {
+        clientId: "valid_id",
         name: "valid_name",
         value: "valid_value",
         expireDate: "11/01/1999",
@@ -149,6 +149,7 @@ describe("Insert bill controller", () => {
 
     const httpRequest = {
       body: {
+        clientId: "valid_id",
         name: "valid_name",
         value: "valid_value",
         expireDate: "01/01/1999",
@@ -160,6 +161,7 @@ describe("Insert bill controller", () => {
     expect(httpResponse.statusCode).toBe(200);
     expect(httpResponse.body).toEqual({
       id: "valid_id",
+      clientId: "valid_id",
       name: "valid_name",
       value: "valid_value",
       expireDate: "01/01/1999",
@@ -176,6 +178,7 @@ describe("Insert bill controller", () => {
 
     const httpRequest = {
       body: {
+        clientId: "valid_id",
         name: "valid_name",
         value: "valid_value",
         expireDate: "01/01/1999",
