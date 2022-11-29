@@ -20,6 +20,8 @@ model Bill {
   clientId                       String?
 
   client Client? @relation(fields: [clientId], references: [id])
+
+  notification Notification[]
 }
 
 model Client {
@@ -33,4 +35,13 @@ model Client {
   billsCount  String
 
   bills Bill[]
+}
+
+model Notification {
+  id      String  @id @unique @default(cuid())
+  type    String
+  message String
+  billId  String?
+
+  Bill Bill? @relation(fields: [billId], references: [id])
 }
