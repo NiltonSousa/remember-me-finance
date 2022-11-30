@@ -1,5 +1,7 @@
 import { InsertNotification } from "../../../domain/usecases";
-import { serverError } from "../../helpers/http-helper";
+import { MissingParamError } from "../../errors";
+import { validateFields } from "../../helpers";
+import { badResquest, serverError } from "../../helpers/http-helper";
 import { Controller, HttpRequest } from "../../protocols";
 
 export class InsertNotificationController implements Controller {
@@ -10,6 +12,12 @@ export class InsertNotificationController implements Controller {
   }
 
   async handle(httpRequest: HttpRequest) {
+    const requiredFields = ["billId", "type", "message"];
+
+    const field = await validateFields(requiredFields, httpRequest);
+
+    if (field) return badResquest(new MissingParamError(field));
+
     return {
       statusCode: 500,
       body: serverError(),

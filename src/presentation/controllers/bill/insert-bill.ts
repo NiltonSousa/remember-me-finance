@@ -22,7 +22,9 @@ export class InsertBillController implements Controller {
         "daysBeforeExpireDateToRemember",
       ];
 
-      validateFields(requiredFields, httpRequest);
+      const field = await validateFields(requiredFields, httpRequest);
+
+      if (field) return badResquest(new MissingParamError(field));
 
       const {
         clientId,
