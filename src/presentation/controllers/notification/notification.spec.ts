@@ -51,6 +51,36 @@ describe("Insert Notification Controller", () => {
     expect(httpResponse.body).toEqual(new MissingParamError("billId"));
   });
 
+  it("Should return 400 when no type is provided", async () => {
+    const { sut } = makeSutInsert();
+
+    const httpRequest = {
+      body: {
+        billId: "valid_id",
+        message: "hello_world",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError("type"));
+  });
+
+  it("Should return 400 when no message is provided", async () => {
+    const { sut } = makeSutInsert();
+
+    const httpRequest = {
+      body: {
+        billId: "valid_id",
+        type: "valid_type",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError("message"));
+  });
+
   it("Should return 500 if InsertNotificationController throws", async () => {
     const { sut } = makeSutInsert();
 
