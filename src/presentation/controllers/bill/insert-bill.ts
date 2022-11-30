@@ -1,5 +1,6 @@
 import { InsertBill } from "../../../domain/usecases/insert-bill";
 import { MissingParamError } from "../../errors/missing-param-error";
+import { validateFields } from "../../helpers";
 import { badResquest, ok, serverError } from "../../helpers/http-helper";
 import { Controller } from "../../protocols/controller";
 import { HttpRequest } from "../../protocols/http";
@@ -21,10 +22,7 @@ export class InsertBillController implements Controller {
         "daysBeforeExpireDateToRemember",
       ];
 
-      for (const field of requiredFields) {
-        if (!httpRequest.body[field])
-          return badResquest(new MissingParamError(field));
-      }
+      validateFields(requiredFields, httpRequest);
 
       const {
         clientId,
