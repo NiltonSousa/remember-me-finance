@@ -3,6 +3,7 @@ import {
   InsertNotification,
   InsertNotificationModel,
 } from "../../../domain/usecases";
+import { MissingParamError } from "../../errors";
 import { serverError } from "../../helpers/http-helper";
 import { InsertNotificationController } from "./insert-notification";
 
@@ -34,6 +35,21 @@ describe("Insert Notification Controller", () => {
       insertNotificationStub,
     };
   };
+
+  it("Should return 400 when no billId is provided", async () => {
+    const { sut } = makeSutInsert();
+
+    const httpRequest = {
+      body: {
+        type: "valid_type",
+        message: "hello_world",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError("billId"));
+  });
 
   it("Should return 500 if InsertNotificationController throws", async () => {
     const { sut } = makeSutInsert();
