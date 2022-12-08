@@ -1,10 +1,12 @@
 import { PrismaClient } from "@prisma/client";
-import { DbInsertBillModel } from "../../../../data/protocols";
+import {
+  DbInsertBillModel,
+  DbInsertNotificationModel,
+} from "../../../../data/protocols";
 import setEnv from "../../../../main/config/env";
 
 export const SqliteHelper = {
   client: null as any,
-  bill: null as any,
 
   async connect(type?: string) {
     if (type == "test") {
@@ -20,8 +22,13 @@ export const SqliteHelper = {
     }
   },
 
+  async disconnect() {
+    await this.client.$disconnect();
+  },
+
   async createBill(bill: DbInsertBillModel) {
     const {
+      id,
       clientId,
       name,
       value,
@@ -30,6 +37,7 @@ export const SqliteHelper = {
     } = bill;
     await this.client.bill.create({
       data: {
+        id,
         clientId,
         name,
         value,
@@ -67,6 +75,17 @@ export const SqliteHelper = {
         email,
         phoneNumber,
         billsCount,
+      },
+    });
+  },
+
+  async createNotification(notification: DbInsertNotificationModel) {
+    const { billId, type, message } = notification;
+    await this.client.notification.create({
+      data: {
+        billId,
+        type,
+        message,
       },
     });
   },
