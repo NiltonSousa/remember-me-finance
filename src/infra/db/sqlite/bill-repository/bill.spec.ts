@@ -28,6 +28,13 @@ describe("Bill sqlite repository", () => {
     );
   });
 
+  afterAll(async () => {
+    const deleteOlderClients = SqliteHelper.client.client.deleteMany();
+
+    await SqliteHelper.client.$transaction([deleteOlderClients]);
+    await SqliteHelper.disconnect();
+  });
+
   it("Should return a bill when insert is success", async () => {
     const sut = makeSutInsert();
 

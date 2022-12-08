@@ -21,6 +21,13 @@ describe("Bill Routes", () => {
     );
   });
 
+  afterAll(async () => {
+    const deleteOlderClients = SqliteHelper.client.client.deleteMany();
+
+    await SqliteHelper.client.$transaction([deleteOlderClients]);
+    await SqliteHelper.disconnect();
+  });
+
   it("Should return an bill on success", async () => {
     await request(app)
       .post("/bill")
