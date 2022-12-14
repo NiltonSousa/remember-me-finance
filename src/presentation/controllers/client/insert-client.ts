@@ -1,10 +1,47 @@
-import { serverError } from "../../helpers";
+import { InsertClient } from "../../../domain/usecases";
+import { MissingParamError } from "../../errors";
+import { badResquest, ok, serverError, validateFields } from "../../helpers";
 import { Controller, HttpRequest, HttpResponse } from "../../protocols";
 
 export class InsertClientController implements Controller {
-  async handle(httpRequest: HttpRequest) {
-    const httpResponse: HttpResponse = serverError();
+  private readonly insertClient: InsertClient;
 
-    return httpResponse;
+  constructor(insertClient: InsertClient) {
+    this.insertClient = insertClient;
+  }
+
+  async handle(httpRequest: HttpRequest) {
+    try {
+      const requiredFields = [
+        "name",
+        "cpf",
+        "message",
+        "birthdate",
+        "email",
+        "phoneNumber",
+        "billsCount",
+      ];
+
+      const field = await validateFields(requiredFields, httpRequest);
+
+      if (field) return badResquest(new MissingParamError(field));
+
+      const { name, cpf, message, birthdate, email, phoneNumber, billsCount } =
+        httpRequest.body;
+
+      const client = await this.insertClient.insert({
+        name,
+        cpf,
+        message,
+        birthdate,
+        email,
+        phoneNumber,
+        billsCount,
+      });
+
+      return ok(client);
+    } catch (error) {
+      return serverError();
+    }
   }
 }
