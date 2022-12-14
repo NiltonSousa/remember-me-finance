@@ -2,13 +2,13 @@ import { serverError } from "../../helpers";
 import { HttpRequest } from "../../protocols";
 import { InsertClientController } from "./insert-client";
 
-const makeInsertClient = () => {
+const makeSutInsertClient = () => {
   return new InsertClientController();
 };
 
 describe("Insert Client Controller", () => {
   it("Should return 500 if InsertClientController throws", async () => {
-    const sut = makeInsertClient();
+    const sut = makeSutInsertClient();
 
     const httpRequest: HttpRequest = {
       body: {
