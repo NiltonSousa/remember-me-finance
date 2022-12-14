@@ -1,6 +1,4 @@
 import {
-  BillModel,
-  DbInsertBillModel,
   DbInsertNotificationModel,
   InsertNotificationRepository,
 } from "../../../../data/protocols/index";
