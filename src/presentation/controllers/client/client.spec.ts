@@ -76,7 +76,6 @@ describe("Insert Client Controller", () => {
     const httpRequest: HttpRequest = {
       body: {
         cpf: "valid_cpf",
-        message: "valid_message",
         birthdate: "valid_birthdate",
         email: "valid_email",
         phoneNumber: "valid_number",

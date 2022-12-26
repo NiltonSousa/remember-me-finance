@@ -32,7 +32,6 @@ export class InsertClientController implements Controller {
       const client = await this.insertClient.insert({
         name,
         cpf,
-        message,
         birthdate,
         email,
         phoneNumber,
