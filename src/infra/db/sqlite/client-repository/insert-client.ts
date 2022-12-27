@@ -13,8 +13,6 @@ export class InsertClientSqliteRepository implements InsertClientRepository {
     const code = String(generateId()).toUpperCase();
     const { name, cpf, billsCount, birthdate, email, phoneNumber } = client;
 
-    console.log("client-->", client);
-
     await SqliteHelper.createClient(
       code,
       name,
