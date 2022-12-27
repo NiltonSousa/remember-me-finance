@@ -15,7 +15,6 @@ export class InsertClientController implements Controller {
       const requiredFields = [
         "name",
         "cpf",
-        "message",
         "birthdate",
         "email",
         "phoneNumber",
@@ -26,7 +25,7 @@ export class InsertClientController implements Controller {
 
       if (field) return badResquest(new MissingParamError(field));
 
-      const { name, cpf, message, birthdate, email, phoneNumber, billsCount } =
+      const { name, cpf, birthdate, email, phoneNumber, billsCount } =
         httpRequest.body;
 
       const client = await this.insertClient.insert({
@@ -40,6 +39,7 @@ export class InsertClientController implements Controller {
 
       return ok(client);
     } catch (error) {
+      console.log("error-->", error);
       return serverError();
     }
   }

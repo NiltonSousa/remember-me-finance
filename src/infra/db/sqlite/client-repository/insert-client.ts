@@ -11,9 +11,12 @@ export class InsertClientSqliteRepository implements InsertClientRepository {
   async insert(client: DbInsertClientModel): Promise<ClientModel> {
     const generateId = new ShortUniqueId({ length: 6 });
     const code = String(generateId()).toUpperCase();
-    const { name, cpf, billsCount, birthdate, email, phoneNumber, id } = client;
+    const { name, cpf, billsCount, birthdate, email, phoneNumber } = client;
+
+    console.log("client-->", client);
+
     await SqliteHelper.createClient(
-      generateId.toString(),
+      code,
       name,
       cpf ?? "",
       birthdate,
