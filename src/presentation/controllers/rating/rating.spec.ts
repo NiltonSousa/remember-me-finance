@@ -78,4 +78,24 @@ describe("Insert Rating Controller", () => {
     expect(httpResponse.statusCode).toBe(400);
     expect(httpResponse.body).toEqual(new MissingParamError("grade"));
   });
+
+  it("Should return 200 if data is provided", async () => {
+    const { sut } = makeSutInsert();
+
+    const httpRequest = {
+      body: {
+        clientId: "valid_client_id",
+        grade: "5",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual({
+      id: "valid_id",
+      clientId: "valid_client_id",
+      grade: "5",
+      insertedAt: "10/01/2023",
+    });
+  });
 });
