@@ -34,7 +34,8 @@ model Client {
   phoneNumber String
   billsCount  String
 
-  bills Bill[]
+  bills  Bill[]
+  rating Rating[]
 }
 
 model Notification {
@@ -44,4 +45,13 @@ model Notification {
   billId  String?
 
   Bill Bill? @relation(fields: [billId], references: [id])
+}
+
+model Rating {
+  id         String  @id @unique @default(cuid())
+  grade      String
+  insertedAt String
+  clientId   String?
+
+  Client Client? @relation(fields: [clientId], references: [id])
 }
