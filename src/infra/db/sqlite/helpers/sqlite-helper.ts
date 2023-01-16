@@ -2,6 +2,7 @@ import { PrismaClient } from "@prisma/client";
 import {
   DbInsertBillModel,
   DbInsertNotificationModel,
+  DbInsertRatingModel,
 } from "../../../../data/protocols";
 import setEnv from "../../../../main/config/env";
 
@@ -86,6 +87,17 @@ export const SqliteHelper = {
         billId,
         type,
         message,
+      },
+    });
+  },
+
+  async createRating(rating: DbInsertRatingModel) {
+    const { clientId, grade, insertedAt } = rating;
+    await this.client.rating.create({
+      data: {
+        clientId,
+        grade,
+        insertedAt,
       },
     });
   },
