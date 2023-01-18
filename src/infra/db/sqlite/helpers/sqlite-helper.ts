@@ -92,9 +92,10 @@ export const SqliteHelper = {
   },
 
   async createRating(rating: DbInsertRatingModel) {
-    const { clientId, grade, insertedAt } = rating;
+    const { id, clientId, grade, insertedAt } = rating;
     await this.client.rating.create({
       data: {
+        id,
         clientId,
         grade,
         insertedAt,
