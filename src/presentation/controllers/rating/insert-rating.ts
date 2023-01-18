@@ -23,6 +23,7 @@ export class InsertRatingController implements Controller {
       const rating = await this.insertRating.insert({
         clientId,
         grade,
+        insertedAt: new Date().toLocaleDateString()
       });
 
       return ok(rating);
