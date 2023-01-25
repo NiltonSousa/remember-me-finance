@@ -4,7 +4,7 @@
   "description": "TCC Project about finance solution and remember user about your expenditure",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests -i",
+    "test": "jest -i --silent",
     "test:integration": "jest -i --passWithNoTests -c jest-int.config.js",
     "start": "sucrase-node src/main/server.ts"
   },
