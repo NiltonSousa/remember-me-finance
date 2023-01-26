@@ -9,7 +9,7 @@ export interface EmailTransporterModel {
   tls: { rejectUnauthorized: false };
 }
 
-export interface EmailOptinsModel {
+export interface SendEmailOptionsModel {
   from: string;
   to: string;
   subject: string;

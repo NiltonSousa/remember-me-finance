@@ -1,5 +1,5 @@
-import { EmailOptinsModel } from "../models/email";
+import { SendEmailOptionsModel } from "../models/email";
 
 export interface SendEmail {
-    send(email: EmailOptinsModel): Promise<string>;
+    send(email: SendEmailOptionsModel): Promise<string>;
 }

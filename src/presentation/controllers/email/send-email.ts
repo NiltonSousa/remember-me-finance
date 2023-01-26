@@ -1,10 +1,10 @@
-import { EmailOptinsModel } from "../../../domain/models";
+import { SendEmailOptionsModel } from "../../../domain/models";
 import { SendEmail } from "../../../domain/usecases";
 
 export class SendEmailController {
   constructor(readonly sendEmail: SendEmail) {}
 
-  async handle(email: EmailOptinsModel) {
+  async handle(email: SendEmailOptionsModel) {
     try {
       await this.sendEmail.send(email);
 
