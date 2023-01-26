@@ -1,11 +1,11 @@
-import { EmailOptinsModel } from "../../../domain/models";
+import { SendEmailOptionsModel } from "../../../domain/models";
 import { SendEmail } from "../../../domain/usecases";
 import { SendEmailController } from "./send-email";
 
 describe("Send email Controller tests", () => {
   const makeSendEmail = () => {
     class SendMailStub implements SendEmail {
-      send(email: EmailOptinsModel): Promise<string> {
+      send(email: SendEmailOptionsModel): Promise<string> {
         return new Promise((resolve) => {
           resolve("Email sent with success");
         });
