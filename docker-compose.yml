@@ -1,13 +1,14 @@
-version: "3"
+version: "3.8"
 services:
-  sqlite3:
-    container_name: sqlite3_container
-    image: nouchka/sqlite3:latest
-    stdin_open: true
-    tty: true
+  postgres:
+    image: postgres:12.2-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=sammy
+      - POSTGRES_PASSWORD=your_password
     volumes:
-      #Modify following line
-      - ./db/:/root/db/
+      - postgres:/var/lib/postgresql/data
     ports:
-      - "9000:9000" # expose ports - HOST:CONTAINER
-    restart: unless-stopped
+      - "5432:5432"
+volumes:
+  postgres:
