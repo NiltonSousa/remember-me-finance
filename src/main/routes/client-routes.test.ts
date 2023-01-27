@@ -1,5 +1,5 @@
 import request from "supertest";
-import { SqliteHelper } from "../../infra/db/sqlite/helpers/sqlite-helper";
+import { SqliteHelper } from "../../infra/db/postgresql/helpers/sqlite-helper";
 
 import app from "../config/app";
 

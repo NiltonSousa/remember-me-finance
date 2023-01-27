@@ -1,5 +1,5 @@
 import { InsertNotificationController } from "../../presentation/controllers/notification/insert-notification";
-import { InsertNotificationSqliteRepository } from "../../infra/db/sqlite/notification-repository/insert-notification";
+import { InsertNotificationSqliteRepository } from "../../infra/db/postgresql/notification-repository/insert-notification";
 import { DbInsertNotification } from "../../data/insert-notification/db-insert-notification";
 
 export const makeInsertNotificationController = (): InsertNotificationController => {
