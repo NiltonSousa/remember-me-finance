@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest -i --silent",
     "test:integration": "jest -i --passWithNoTests -c jest-int.config.js",
-    "start": "sucrase-node src/main/server.ts"
+    "start": "sucrase-node src/main/server.ts",
+    "start:send-email": "sucrase-node src/main/lambdas/send-email.ts"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,7 @@
     "@prisma/client": "^4.5.0",
     "express": "^4.18.2",
     "jest": "^27.4.7",
-    "nodemailer": "^6.9.0",
+    "nodemailer": "^6.9.1",
     "sequelize": "^6.25.2",
     "short-unique-id": "^4.4.4",
     "sqlite3": "^5.1.2",
@@ -33,6 +34,7 @@
     "@types/express": "^4.17.14",
     "@types/jest": "^29.0.3",
     "@types/node": "^18.11.12",
+    "@types/nodemailer": "^6.4.7",
     "@types/sequelize": "^4.28.14",
     "@types/sqlite3": "^3.1.8",
     "@types/supertest": "^2.0.12",
