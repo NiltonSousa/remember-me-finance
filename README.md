@@ -6,6 +6,7 @@
 
 This project is the academic solution, based in personal necessity when always forgot my expediture.
 With this I decided create this solution to insert all expediture and the Web Site remember me when valid date arrive.
+
 </div>
 
 ## :rocket: Technology
@@ -24,7 +25,7 @@ Node Version: v16.13.0
 
 - ### **Pre requisites**
 
-    - Make sure you have Node version 16 in your computer.
+  - Make sure you have Node version 16 in your computer.
 
 ## :hammer: Application
 
@@ -39,15 +40,21 @@ Node Version: v16.13.0
 
 ```sh
 PORT=8000
-SQLITE_URL="file:../db/dev.db"
-SQLITE_URL_TEST="file:../db/test.db"
-DATABASE_URL="file:../db/test.db"
+SQLITE_URL="postgresql://sammy:your_password@localhost:5432/my-blog?schema=public"
+SQLITE_URL_TEST="postgresql://sammy:your_password@localhost:5432/my-blog?schema=public"
+DATABASE_URL="postgresql://sammy:your_password@localhost:5432/my-blog?schema=public"
 ```
 
 ### Install the dependencies
 
 ```sh
   $ npm install
+```
+
+### Run docker-compose file
+
+```sh
+  $ dc up -d
 ```
 
 ## :hammer: DataBase
@@ -75,6 +82,7 @@ $ npx prisma studio
 ```
 
 ## :hammer: Test
+
 ### Unit Test
 
 ```sh
