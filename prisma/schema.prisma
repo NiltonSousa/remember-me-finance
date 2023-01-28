@@ -15,7 +15,7 @@ model Bill {
 
   name                           String
   value                          String
-  expireDate                     String
+  expireDate                     DateTime
   daysBeforeExpireDateToRemember String
   clientId                       String?
 
