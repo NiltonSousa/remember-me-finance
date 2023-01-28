@@ -1,5 +1,5 @@
-import { RatingModel, SendEmailOptionsModel } from "../../domain/models";
+import { SendEmailOptionsModel } from "../../domain/models";
 
 export interface SendEmailNotifier {
-  send(email: SendEmailOptionsModel): Promise<string>;
+  send(): Promise<string>;
 }

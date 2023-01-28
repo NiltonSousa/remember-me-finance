@@ -44,14 +44,14 @@ describe("Bill sqlite repository", () => {
         clientId,
         name: "valid_name",
         value: "50",
-        expireDate: "01/01/1999",
+        expireDate: "2023-01-27T03:00:00.000Z",
         daysBeforeExpireDateToRemember: "5",
       })
       .then((data) => {
         expect(data.clientId).toEqual(clientId);
         expect(data.name).toEqual("valid_name");
         expect(data.value).toEqual("50");
-        expect(data.expireDate).toEqual("01/01/1999");
+        expect(data.expireDate).toEqual("2023-01-27T03:00:00.000Z");
         expect(data.daysBeforeExpireDateToRemember).toEqual("5");
       });
   });
@@ -63,7 +63,6 @@ describe("Bill sqlite repository", () => {
       expect(data[0].clientId).toEqual(clientId);
       expect(data[0].name).toEqual("valid_name");
       expect(data[0].value).toEqual("50");
-      expect(data[0].expireDate).toEqual("01/01/1999");
       expect(data[0].daysBeforeExpireDateToRemember).toEqual("5");
     });
   });

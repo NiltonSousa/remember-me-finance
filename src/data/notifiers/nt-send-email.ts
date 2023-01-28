@@ -1,4 +1,3 @@
-import { SendEmailOptionsModel } from "../../domain/models";
 import {
   SendEmailModel,
   SendEmailNotifier,
@@ -11,9 +10,7 @@ export class NtSendEmail implements SendEmailModel {
     this.sendEmailNotifier = sendEmailNotifier;
   }
 
-  async send(email: SendEmailOptionsModel): Promise<string> {
-    await this.sendEmailNotifier.send(email);
-
-    return "Email sent!"
+  async send(): Promise<string> {
+    return await this.sendEmailNotifier.send();
   }
 }

@@ -1,7 +1,5 @@
 import { SendEmailOptionsModel } from "../../domain/models";
-import {
-  SendEmailNotifier,
-} from "../protocols/index";
+import { SendEmailNotifier } from "../protocols/index";
 import { NtSendEmail } from "./nt-send-email";
 
 export interface SutTypes {
@@ -11,7 +9,7 @@ export interface SutTypes {
 
 const makeSendEmailNotifier = (): SendEmailNotifier => {
   class SendEmailNotifierStub implements SendEmailNotifier {
-    async send(email: SendEmailOptionsModel): Promise<string> {
+    async send(): Promise<string> {
       return new Promise((resolve) => resolve("Email sent"));
     }
   }
@@ -39,14 +37,7 @@ describe("NtSendEmail usecase", () => {
         new Promise((resolve, reject) => reject(new Error()))
       );
 
-    const emailOptions = {
-        from: "valid_email@mail.com",
-        to: "valid_email@mail.com",
-        subject: "Test send email",
-        text: "Hello world"
-    };
-
-    const promise = sut.send(emailOptions);
+    const promise = sut.send();
 
     await expect(promise).rejects.toThrow();
   });
@@ -56,35 +47,16 @@ describe("NtSendEmail usecase", () => {
 
     const insertSpy = jest.spyOn(sendEmailNotifierStub, "send");
 
-    const emailOptions = {
-        from: "valid_email@mail.com",
-        to: "valid_email@mail.com",
-        subject: "Test send email",
-        text: "Hello world"
-    };
+    await sut.send();
 
-    await sut.send(emailOptions);
-
-    expect(insertSpy).toHaveBeenCalledWith({
-        from: "valid_email@mail.com",
-        to: "valid_email@mail.com",
-        subject: "Test send email",
-        text: "Hello world"
-    });
+    expect(insertSpy).toHaveBeenCalledWith();
   });
 
   it("Should return success if email sent", async () => {
     const { sut } = makeSut();
 
-    const emailOptions = {
-        from: "valid_email@mail.com",
-        to: "valid_email@mail.com",
-        subject: "Test send email",
-        text: "Hello world"
-    };
+    const response = await sut.send();
 
-    const response = await sut.send(emailOptions);
-
-    expect(response).toEqual("Email sent!");
+    expect(response).toEqual("Email sent");
   });
 });

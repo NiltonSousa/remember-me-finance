@@ -3,8 +3,6 @@ import { InsertClientSqliteRepository } from "../../infra/db/postgresql/client-r
 import { InsertClientController } from "../../presentation/controllers/client/insert-client";
 
 export const makeInsertClientController = (): InsertClientController => {
-  console.log("Entrou");
-
   const clientSqliteRepository = new InsertClientSqliteRepository();
 
   const dbInsertClient = new DbInsertClient(clientSqliteRepository);

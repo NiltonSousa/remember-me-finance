@@ -58,6 +58,21 @@ export const SqliteHelper = {
     });
   },
 
+  async listBillsToSendEmail(dateNow: string, dateAfter: string) {
+    return await this.client.bill.findMany({
+      where: {
+        expireDate: {
+          lte: new Date(dateAfter),
+          gte: new Date(dateNow),
+        },
+      },
+      include: {
+        notification: true,
+        client: true,
+      },
+    });
+  },
+
   async createClient(
     id: string,
     name: string,

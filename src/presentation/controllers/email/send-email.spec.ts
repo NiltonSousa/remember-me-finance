@@ -5,7 +5,7 @@ import { SendEmailController } from "./send-email";
 describe("Send email Controller tests", () => {
   const makeSendEmail = () => {
     class SendMailStub implements SendEmail {
-      send(email: SendEmailOptionsModel): Promise<string> {
+      send(): Promise<string> {
         return new Promise((resolve) => {
           resolve("Email sent with success");
         });
@@ -29,16 +29,9 @@ describe("Send email Controller tests", () => {
   it("Should send email with success", async () => {
     const { sut } = makeSut();
 
-    const emailOptions = {
-      from: "valid_email@mail.com",
-      to: "valid_mail2@mail.com",
-      subject: "Test send email subject",
-      text: "Test text",
-    };
+    const response = await sut.handle();
 
-    const response = await sut.handle(emailOptions);
-
-    expect(response).toEqual("Email enviado com sucesso");
+    expect(response).toEqual("Email sent with success");
   });
 
   it("Should return error if send email controller throws", async () => {
@@ -50,14 +43,7 @@ describe("Send email Controller tests", () => {
         new Promise((resolve, reject) => reject(new Error()))
       );
 
-    const emailOptions = {
-      from: "valid_email@mail.com",
-      to: "valid_mail2@mail.com",
-      subject: "Test send email subject",
-      text: "Test text",
-    };
-
-    const promise = sut.handle(emailOptions);
+    const promise = sut.handle();
 
     await expect(promise).rejects.toThrow();
   });

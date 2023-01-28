@@ -35,7 +35,7 @@ describe("Bill Routes", () => {
         clientId,
         name: "valid_name",
         value: "50",
-        expireDate: "01/01/1999",
+        expireDate: "2023-01-27T03:00:00.000Z",
         daysBeforeExpireDateToRemember: "5",
       })
       .expect(200);

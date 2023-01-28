@@ -25,7 +25,7 @@ describe("Notification sqlite repository", () => {
       clientId,
       name: "valid_name",
       value: "valid_value",
-      expireDate: "19/01/1999",
+      expireDate: "2023-01-27T03:00:00.000Z",
       daysBeforeExpireDateToRemember: "5",
     });
   });
