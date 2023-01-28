@@ -20,7 +20,7 @@ export class SendEmailInfraNotifier implements SendEmailNotifier {
     for (const item of reponse) {
       const emailOptions: SendEmailOptionsModel = {
         to: item.client.email,
-        from: "nil.max13@gmail.com",
+        from: `${process.env.EMAIL_ADDRESS}`,
         subject: "Notificação de contas a pagar",
         text: `A conta ${item.name} do valor ${item.value} está prestes a vencer. Lembre-se de pagar até o dia ${item.expireDate}.\n\n
         Atenciosamente.\n
@@ -37,8 +37,8 @@ export class SendEmailInfraNotifier implements SendEmailNotifier {
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
-        user: "noreply.remember.me@gmail.com",
-        pass: "owijzoohxsxppcel",
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD,
       },
     });
 
