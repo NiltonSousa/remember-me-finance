@@ -7,7 +7,7 @@
     "test": "jest -i --silent",
     "test:integration": "jest -i --passWithNoTests -c jest-int.config.js",
     "start": "sucrase-node src/main/server.ts",
-    "start:send-email": "sucrase-node src/main/lambdas/send-email.ts"
+    "start:send-email": "sucrase-node src/main/cronjob/send-email.ts"
   },
   "repository": {
     "type": "git",

@@ -16,7 +16,6 @@ export const SqliteHelper = {
         log: ["query"],
       });
     } else {
-      process.env.DATABASE_URL = setEnv.sqliteUrl;
       this.client = new PrismaClient({
         log: ["query"],
       });
