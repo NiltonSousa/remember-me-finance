@@ -4,7 +4,7 @@ import { makeSendEmailController } from "../factories/email";
 async function main() {
   SqliteHelper.connect();
 
-  return makeSendEmailController().handle();
+  await makeSendEmailController().handle();
 }
 
 main().catch((error: any) => {
