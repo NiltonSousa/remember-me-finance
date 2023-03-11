@@ -94,6 +94,16 @@ export const SqliteHelper = {
     });
   },
 
+  async listClient(clientId: string) {
+    return await this.client.client.findMany({
+      where: {
+        id: {
+          equals: clientId,
+        },
+      },
+    });
+  },
+
   async createNotification(notification: DbInsertNotificationModel) {
     const { billId, type, message } = notification;
     await this.client.notification.create({
