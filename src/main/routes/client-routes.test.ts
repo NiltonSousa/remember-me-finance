@@ -2,10 +2,23 @@ import request from "supertest";
 import { SqliteHelper } from "../../infra/db/postgresql/helpers/sqlite-helper";
 
 import app from "../config/app";
+import ShortUniqueId from "short-unique-id";
 
 describe("Client Routes", () => {
+  const generateId = new ShortUniqueId({ length: 6 });
+  const clientId = String(generateId()).toUpperCase();
+
   beforeAll(async () => {
     SqliteHelper.connect("test");
+    await SqliteHelper.createClient(
+      clientId,
+      "valid_name",
+      "12345678",
+      "19/01/1999",
+      "user@mail.com",
+      "123",
+      "4"
+    );
   });
 
   afterAll(async () => {
@@ -27,5 +40,9 @@ describe("Client Routes", () => {
         billsCount: "0",
       })
       .expect(200);
+  });
+
+  it("Should return an client list on success", async () => {
+    await request(app).get(`/client?clientId=${clientId}`).expect(200);
   });
 });
