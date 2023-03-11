@@ -13,3 +13,7 @@ export interface DbInsertClientModel {
 export interface InsertClientModel {
   insert(client: DbInsertClientModel): Promise<ClientModel>;
 }
+
+export interface ListClientModel {
+  list(clientId: string): Promise<ClientModel>;
+}
