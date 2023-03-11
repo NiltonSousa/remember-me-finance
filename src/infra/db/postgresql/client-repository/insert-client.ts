@@ -9,8 +9,15 @@ import { map } from "./client-mapper";
 
 export class InsertClientSqliteRepository implements InsertClientRepository {
   async insert(client: DbInsertClientModel): Promise<ClientModel> {
-    const generateId = new ShortUniqueId({ length: 6 });
-    const code = String(generateId()).toUpperCase();
+    let code = "";
+
+    if (!client.id) {
+      const generateId = new ShortUniqueId({ length: 6 });
+      code = String(generateId()).toUpperCase();
+    } else {
+      code = client.id;
+    }
+
     const { name, cpf, billsCount, birthdate, email, phoneNumber } = client;
 
     await SqliteHelper.createClient(
