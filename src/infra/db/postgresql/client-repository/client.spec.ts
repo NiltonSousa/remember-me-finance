@@ -1,10 +1,23 @@
 import ShortUniqueId from "short-unique-id";
 import { SqliteHelper } from "../helpers/sqlite-helper";
 import { InsertClientSqliteRepository } from "./insert-client";
+import { ListClientSqliteRepository } from "./list-client";
 
 describe("Client sqlite repository", () => {
+  const generateId = new ShortUniqueId({ length: 6 });
+  const clientId = String(generateId()).toUpperCase();
+
   beforeAll(async () => {
     SqliteHelper.connect("test");
+    await SqliteHelper.createClient(
+      clientId,
+      "valid_name",
+      "12345678",
+      "19/01/1999",
+      "user@mail.com",
+      "123",
+      "4"
+    );
   });
 
   afterAll(async () => {
@@ -14,6 +27,10 @@ describe("Client sqlite repository", () => {
 
     await SqliteHelper.disconnect();
   });
+
+  const makeSutList = () => {
+    return new ListClientSqliteRepository();
+  };
 
   it("Should return an client when insert is success", async () => {
     const sut = new InsertClientSqliteRepository();
@@ -35,5 +52,19 @@ describe("Client sqlite repository", () => {
         expect(data.phoneNumber).toEqual("valid_number");
         expect(data.billsCount).toEqual("0");
       });
+  });
+
+  it("Should return a client when list is success", async () => {
+    const sut = makeSutList();
+
+    return await sut.list(clientId).then((data) => {
+      expect(data.id).toEqual(clientId);
+      expect(data.name).toEqual("valid_name");
+      expect(data.cpf).toEqual("12345678");
+      expect(data.birthdate).toEqual("19/01/1999");
+      expect(data.email).toEqual("user@mail.com");
+      expect(data.phoneNumber).toEqual("123");
+      expect(data.billsCount).toEqual("4");
+    });
   });
 });
