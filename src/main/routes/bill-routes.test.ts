@@ -40,4 +40,8 @@ describe("Bill Routes", () => {
       })
       .expect(200);
   });
+
+  it("Should return an bill list on success", async () => {
+    await request(app).get(`/bill?clientId=${clientId}`).expect(200);
+  });
 });
