@@ -1,12 +1,14 @@
 import { ListBillController, InsertBillController } from ".";
 import { BillModel } from "../../../domain/models/index";
 import {
+  DeleteBill,
   InsertBill,
   InsertBillModel,
   ListBill,
 } from "../../../domain/usecases/index";
 import { MissingParamError } from "../../errors/missing-param-error";
 import { serverError } from "../../helpers/http-helper";
+import { DeleteBillController } from "./delete-bill";
 
 export interface SutTypesInsert {
   sut: InsertBillController;
@@ -51,6 +53,18 @@ const makeListBill = () => {
   return new ListBillStub();
 };
 
+const makeDeleteBill = () => {
+  class DeleteBillStub implements DeleteBill {
+    delete(billId: string): Promise<string> {
+      const messageResponse = "Bill deleted with success!";
+
+      return new Promise((resolve) => resolve(messageResponse));
+    }
+  }
+
+  return new DeleteBillStub();
+};
+
 const makeSutInsert = (): SutTypesInsert => {
   const insertBillStub = makeInsertBill();
 
@@ -59,6 +73,17 @@ const makeSutInsert = (): SutTypesInsert => {
   return {
     sut,
     insertBillStub,
+  };
+};
+
+const makeSutDelete = () => {
+  const deleteBillStub = makeDeleteBill();
+
+  const sut = new DeleteBillController(deleteBillStub);
+
+  return {
+    sut,
+    deleteBillStub,
   };
 };
 
@@ -244,5 +269,51 @@ describe("List bill controller", () => {
         daysBeforeExpireDateToRemember: "5",
       },
     ]);
+  });
+});
+
+describe("Delete bill controller", () => {
+  it("Should return 400 if no billId is provided", async () => {
+    const { sut } = makeSutDelete();
+
+    const httpRequest = {
+      queryParams: {},
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(400);
+    expect(httpResponse.body).toEqual(new MissingParamError("billId"));
+  });
+
+  it("Should return 500 if DeleteBillController throws", async () => {
+    const { sut, deleteBillStub } = makeSutDelete();
+
+    jest.spyOn(deleteBillStub, "delete").mockImplementationOnce(() => {
+      return new Promise((resolver, reject) => reject(new Error()));
+    });
+
+    const httpRequest = {
+      queryParams: {
+        billId: "valid_id",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(500);
+    expect(httpResponse).toEqual(serverError());
+  });
+
+  it("Should return 200 if billId is provided", async () => {
+    const { sut } = makeSutDelete();
+
+    const httpRequest = {
+      queryParams: {
+        billId: "valid_id",
+      },
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual("Bill deleted with success!");
   });
 });
