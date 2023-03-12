@@ -15,3 +15,8 @@ export const ok = (data: any): HttpResponse => ({
   statusCode: 200,
   body: data,
 });
+
+export const unauthorized = (data: any): HttpResponse => ({
+  statusCode: 401,
+  body: data,
+});
