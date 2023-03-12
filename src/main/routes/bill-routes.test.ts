@@ -41,10 +41,24 @@ describe("Bill Routes", () => {
     await SqliteHelper.disconnect();
   });
 
-  it("Should return an bill on success", async () => {
+  it("Should return an bill on insert success", async () => {
     await request(app)
       .post("/bill")
       .send({
+        clientId,
+        name: "valid_name",
+        value: "50",
+        expireDate: "2023-01-27T03:00:00.000Z",
+        daysBeforeExpireDateToRemember: "5",
+      })
+      .expect(200);
+  });
+
+  it("Should return an bill on update success", async () => {
+    await request(app)
+      .put("/bill")
+      .send({
+        id: "valid_bill_id",
         clientId,
         name: "valid_name",
         value: "50",
