@@ -33,6 +33,8 @@ model Client {
   email       String
   phoneNumber String
   billsCount  String
+  password    String?
+  isAdmin     Boolean?
 
   bills  Bill[]
   rating Rating[]
