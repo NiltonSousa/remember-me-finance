@@ -1,3 +1,4 @@
+import { BillModel } from "../models";
 export interface UpdateBill {
-  update(billId: string): Promise<string>;
+  update(billId: BillModel): Promise<BillModel>;
 }
