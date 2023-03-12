@@ -4,6 +4,9 @@ import { InsertBillSqliteRepository } from "../../infra/db/postgresql/bill-repos
 import { ListBillController } from "../../presentation/controllers/bill";
 import { ListBillSqliteRepository } from "../../infra/db/postgresql/bill-repository/list-bill";
 import { DbListBill } from "../../data/list-bill/db-list-bill";
+import { DeleteBillController } from "../../presentation/controllers/bill/delete-bill";
+import { DeleteBillSqliteRepository } from "../../infra/db/postgresql/bill-repository/delete-bill";
+import { DbDeleteBill } from "../../data/delete-bill/db-delete-bill";
 
 export const makeInsertBillController = (): InsertBillController => {
   const billSqliteRepository = new InsertBillSqliteRepository();
@@ -19,4 +22,12 @@ export const makeListBillController = (): ListBillController => {
   const dbListBill = new DbListBill(billSqliteRepository);
 
   return new ListBillController(dbListBill);
+};
+
+export const makeDeleteBillController = (): DeleteBillController => {
+  const billSqliteRepository = new DeleteBillSqliteRepository();
+
+  const dbListBill = new DbDeleteBill(billSqliteRepository);
+
+  return new DeleteBillController(dbListBill);
 };
