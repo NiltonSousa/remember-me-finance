@@ -19,12 +19,25 @@ describe("Bill Routes", () => {
       "123",
       "4"
     );
+
+    await SqliteHelper.createBill({
+      clientId,
+      id: "valid_bill_id",
+      name: "valid_name",
+      value: "10",
+      expireDate: "2023-01-28T00:00:00.000Z",
+      daysBeforeExpireDateToRemember: "5",
+    });
   });
 
   afterAll(async () => {
     const deleteOlderClients = SqliteHelper.client.client.deleteMany();
+    const deleteOlderBills = SqliteHelper.client.bill.deleteMany();
 
-    await SqliteHelper.client.$transaction([deleteOlderClients]);
+    await SqliteHelper.client.$transaction([
+      deleteOlderClients,
+      deleteOlderBills,
+    ]);
     await SqliteHelper.disconnect();
   });
 
@@ -43,5 +56,9 @@ describe("Bill Routes", () => {
 
   it("Should return an bill list on success", async () => {
     await request(app).get(`/bill?clientId=${clientId}`).expect(200);
+  });
+
+  it("Should return a success message when delete is success", async () => {
+    await request(app).delete(`/bill?billId=valid_bill_id`).expect(200);
   });
 });
