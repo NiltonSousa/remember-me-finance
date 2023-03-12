@@ -58,13 +58,13 @@ describe("Client sqlite repository", () => {
     const sut = makeSutList();
 
     return await sut.list(clientId).then((data) => {
-      expect(data.id).toEqual(clientId);
-      expect(data.name).toEqual("valid_name");
-      expect(data.cpf).toEqual("12345678");
-      expect(data.birthdate).toEqual("19/01/1999");
-      expect(data.email).toEqual("user@mail.com");
-      expect(data.phoneNumber).toEqual("123");
-      expect(data.billsCount).toEqual("4");
+      expect(data[0].id).toEqual(clientId);
+      expect(data[0].name).toEqual("valid_name");
+      expect(data[0].cpf).toEqual("12345678");
+      expect(data[0].birthdate).toEqual("19/01/1999");
+      expect(data[0].email).toEqual("user@mail.com");
+      expect(data[0].phoneNumber).toEqual("123");
+      expect(data[0].billsCount).toEqual("4");
     });
   });
 });

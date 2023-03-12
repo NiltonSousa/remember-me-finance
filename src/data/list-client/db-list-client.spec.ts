@@ -4,16 +4,18 @@ import { DbListClient } from "./db-list-client";
 
 const makeListClientRepository = (): ListClientRepository => {
   class ListClientRepositoryStub implements ListClientRepository {
-    async list(clientId: string): Promise<ClientModel> {
-      const fakeClient: ClientModel = {
-        id: "valid_id",
-        cpf: "valid_cpf",
-        name: "valid_name",
-        birthdate: "valid_birthdate",
-        phoneNumber: "valid_phoneNumber",
-        email: "valid_email@mail.com",
-        billsCount: "0",
-      };
+    async list(clientId: string): Promise<Array<ClientModel>> {
+      const fakeClient: ClientModel[] = [
+        {
+          id: "valid_id",
+          cpf: "valid_cpf",
+          name: "valid_name",
+          birthdate: "valid_birthdate",
+          phoneNumber: "valid_phoneNumber",
+          email: "valid_email@mail.com",
+          billsCount: "0",
+        },
+      ];
       return new Promise((resolve) => resolve(fakeClient));
     }
   }
@@ -65,14 +67,16 @@ describe("DbListClient usecase", () => {
 
     const client = await sut.list("valid_id");
 
-    expect(client).toEqual({
-      id: "valid_id",
-      cpf: "valid_cpf",
-      name: "valid_name",
-      birthdate: "valid_birthdate",
-      phoneNumber: "valid_phoneNumber",
-      email: "valid_email@mail.com",
-      billsCount: "0",
-    });
+    expect(client).toEqual([
+      {
+        id: "valid_id",
+        cpf: "valid_cpf",
+        name: "valid_name",
+        birthdate: "valid_birthdate",
+        phoneNumber: "valid_phoneNumber",
+        email: "valid_email@mail.com",
+        billsCount: "0",
+      },
+    ]);
   });
 });

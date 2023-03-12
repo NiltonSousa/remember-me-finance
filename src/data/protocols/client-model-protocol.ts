@@ -15,5 +15,5 @@ export interface InsertClientModel {
 }
 
 export interface ListClientModel {
-  list(clientId: string): Promise<ClientModel>;
+  list(clientId: string): Promise<Array<ClientModel>>;
 }

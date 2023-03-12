@@ -45,16 +45,18 @@ const makeSutInsert = () => {
 
 const makeListClient = () => {
   class ListClientStub implements ListClient {
-    list(clientId: string): Promise<ClientModel> {
-      const fakeClient = {
-        id: "valid_id",
-        cpf: "valid_cpf",
-        name: "valid_name",
-        birthdate: "valid_birthdate",
-        phoneNumber: "valid_phoneNumber",
-        email: "valid_email@mail.com",
-        billsCount: "0",
-      };
+    list(clientId: string): Promise<Array<ClientModel>> {
+      const fakeClient = [
+        {
+          id: "valid_id",
+          cpf: "valid_cpf",
+          name: "valid_name",
+          birthdate: "valid_birthdate",
+          phoneNumber: "valid_phoneNumber",
+          email: "valid_email@mail.com",
+          billsCount: "0",
+        },
+      ];
       return new Promise((resolve) => resolve(fakeClient));
     }
   }
@@ -163,14 +165,16 @@ describe("List client controller", () => {
 
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(200);
-    expect(httpResponse.body).toEqual({
-      id: "valid_id",
-      cpf: "valid_cpf",
-      name: "valid_name",
-      birthdate: "valid_birthdate",
-      phoneNumber: "valid_phoneNumber",
-      email: "valid_email@mail.com",
-      billsCount: "0",
-    });
+    expect(httpResponse.body).toEqual([
+      {
+        id: "valid_id",
+        cpf: "valid_cpf",
+        name: "valid_name",
+        birthdate: "valid_birthdate",
+        phoneNumber: "valid_phoneNumber",
+        email: "valid_email@mail.com",
+        billsCount: "0",
+      },
+    ]);
   });
 });
