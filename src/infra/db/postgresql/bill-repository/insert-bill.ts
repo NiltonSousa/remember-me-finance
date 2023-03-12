@@ -9,9 +9,16 @@ import { map } from "./bill-mapper";
 
 export class InsertBillSqliteRepository implements InsertBillRepository {
   async insert(bill: DbInsertBillModel): Promise<BillModel> {
-    const generateId = new ShortUniqueId({ length: 6 });
-    const code = String(generateId()).toUpperCase();
-    await SqliteHelper.createBill(bill);
+    let code = "";
+
+    if (!bill.id) {
+      const generateId = new ShortUniqueId({ length: 6 });
+      code = String(generateId()).toUpperCase();
+    } else {
+      code = bill.id;
+    }
+
+    await SqliteHelper.createBill({ id: code, ...bill });
 
     return map(bill, code);
   }
