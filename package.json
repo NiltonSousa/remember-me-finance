@@ -4,7 +4,7 @@
   "description": "TCC Project about finance solution and remember user about your expenditure",
   "main": "index.js",
   "scripts": {
-    "test": "jest -i --silent",
+    "test": "jest --runInBand --silent",
     "test:integration": "jest -i --passWithNoTests -c jest-int.config.js",
     "start": "sucrase-node src/main/server.ts",
     "start:send-email": "sucrase-node src/main/cronjob/send-email.ts"
@@ -21,8 +21,10 @@
   "homepage": "https://github.com/NiltonSousa/remember-me-finance#readme",
   "dependencies": {
     "@prisma/client": "^4.5.0",
+    "@types/jsonwebtoken": "^9.0.1",
     "express": "^4.18.2",
     "jest": "^27.4.7",
+    "jsonwebtoken": "^9.0.0",
     "nodemailer": "^6.9.1",
     "sequelize": "^6.25.2",
     "short-unique-id": "^4.4.4",
