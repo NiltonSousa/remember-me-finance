@@ -22,3 +22,7 @@ export interface InsertBillModel {
 export interface ListBillModel {
   list(clientId: string): Promise<Array<BillModel>>;
 }
+
+export interface DeleteBillModel {
+  delete(billId: string): Promise<string>;
+}
