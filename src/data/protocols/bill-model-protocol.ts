@@ -26,3 +26,7 @@ export interface ListBillModel {
 export interface DeleteBillModel {
   delete(billId: string): Promise<string>;
 }
+
+export interface UpdateBillModel {
+  update(billId: string): Promise<string>;
+}

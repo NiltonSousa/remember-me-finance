@@ -2,6 +2,7 @@ export * from "./bill-model-protocol";
 export * from "./client-model-protocol";
 export * from "./insert-bill-repository-protocol";
 export * from "./delete-bill-repository-protocol";
+export * from "./update-bill-repository-protocol";
 export * from "./list-bill-repository-protocol";
 export * from "./list-client-repository-protocol";
 export * from "./notification-model-protocol";
