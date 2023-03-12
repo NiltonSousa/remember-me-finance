@@ -124,18 +124,6 @@ describe("Insert Client Controller", () => {
 });
 
 describe("List client controller", () => {
-  it("Should return 400 if no clientId is provided", async () => {
-    const { sut } = makeSutList();
-
-    const httpRequest = {
-      queryParams: {},
-    };
-
-    const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError("clientId"));
-  });
-
   it("Should return 500 if ListClientController throws", async () => {
     const { sut, listClientStub } = makeSutList();
 

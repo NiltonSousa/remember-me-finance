@@ -8,7 +8,7 @@ export class DbListClient implements ListClientModel {
     this.listClientRepository = listClientRepository;
   }
 
-  async list(clientId: string): Promise<Array<ClientModel>> {
-    return await this.listClientRepository.list(clientId);
+  async list(clientId?: string, email?: string): Promise<Array<ClientModel>> {
+    return await this.listClientRepository.list(clientId, email);
   }
 }

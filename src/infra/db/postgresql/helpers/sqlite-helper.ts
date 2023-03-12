@@ -132,14 +132,26 @@ export const SqliteHelper = {
     });
   },
 
-  async listClient(clientId: string) {
-    return await this.client.client.findMany({
-      where: {
-        id: {
-          equals: clientId,
+  async listClient(clientId?: string, email?: string) {
+    if (clientId) {
+      return await this.client.client.findMany({
+        where: {
+          id: {
+            equals: clientId,
+          },
         },
-      },
-    });
+      });
+    } else if (email) {
+      return await this.client.client.findMany({
+        where: {
+          email: {
+            equals: email,
+          },
+        },
+      });
+    } else {
+      return await this.client.client.findMany({});
+    }
   },
 
   async createNotification(notification: DbInsertNotificationModel) {

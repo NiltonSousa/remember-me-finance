@@ -57,15 +57,15 @@ describe("DbListClient usecase", () => {
 
     const listSpy = jest.spyOn(listClientRepositoryStub, "list");
 
-    await sut.list("valid_id");
+    await sut.list("valid_id", undefined);
 
-    expect(listSpy).toHaveBeenCalledWith("valid_id");
+    expect(listSpy).toHaveBeenCalledWith("valid_id", undefined);
   });
 
   it("Should return an client list when success", async () => {
     const { sut } = makeSut();
 
-    const client = await sut.list("valid_id");
+    const client = await sut.list("valid_id", undefined);
 
     expect(client).toEqual([
       {

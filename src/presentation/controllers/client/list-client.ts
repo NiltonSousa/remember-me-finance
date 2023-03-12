@@ -13,16 +13,9 @@ export class ListClientController implements Controller {
 
   async handle(httpRequest: HttpRequest) {
     try {
-      const requiredFields = ["clientId"];
+      const { clientId, email } = httpRequest.queryParams;
 
-      for (const field of requiredFields) {
-        if (!httpRequest.queryParams[field])
-          return badResquest(new MissingParamError(field));
-      }
-
-      const { clientId } = httpRequest.queryParams;
-
-      const client = await this.listClient.list(clientId);
+      const client = await this.listClient.list(clientId, email);
 
       return ok(client);
     } catch (error) {
