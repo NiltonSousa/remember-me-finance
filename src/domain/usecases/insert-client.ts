@@ -8,6 +8,8 @@ export interface InsertClientModel {
   email: string;
   phoneNumber: string;
   billsCount: string;
+  password?: string;
+  isAdmin?: boolean;
 }
 
 export interface InsertClient {

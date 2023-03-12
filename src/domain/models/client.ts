@@ -6,4 +6,6 @@ export interface ClientModel {
   email: string;
   phoneNumber: string;
   billsCount: string;
+  password?: string;
+  isAdmin?: boolean;
 }

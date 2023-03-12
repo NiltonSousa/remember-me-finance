@@ -8,6 +8,8 @@ export interface DbInsertClientModel {
   email: string;
   phoneNumber: string;
   billsCount: string;
+  password?: string;
+  isAdmin?: boolean;
 }
 
 export interface InsertClientModel {

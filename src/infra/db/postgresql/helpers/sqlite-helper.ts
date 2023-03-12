@@ -113,7 +113,9 @@ export const SqliteHelper = {
     birthdate: string,
     email: string,
     phoneNumber: string,
-    billsCount: string
+    billsCount: string,
+    password?: string,
+    isAdmin?: boolean
   ) {
     await this.client.client.create({
       data: {
@@ -124,6 +126,8 @@ export const SqliteHelper = {
         email,
         phoneNumber,
         billsCount,
+        password,
+        isAdmin,
       },
     });
   },
