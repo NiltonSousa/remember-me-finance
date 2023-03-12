@@ -8,3 +8,12 @@ export async function validateFields(
     if (!httpRequest.body[field]) return field;
   }
 }
+
+export async function validateQueryFields(
+  requiredFields: string[],
+  httpRequest: HttpRequest
+) {
+  for (const field of requiredFields) {
+    if (!httpRequest.queryParams[field]) return field;
+  }
+}
