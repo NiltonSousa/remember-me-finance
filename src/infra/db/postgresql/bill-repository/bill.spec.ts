@@ -3,12 +3,17 @@ import { ListBillSqliteRepository } from "./list-bill";
 import { SqliteHelper } from "../helpers/sqlite-helper";
 import ShortUniqueId from "short-unique-id";
 import { DeleteBillSqliteRepository } from "./delete-bill";
+import { UpdateBillSqliteRepository } from "./update-bill";
 
 const generateId = new ShortUniqueId({ length: 6 });
 const clientId = String(generateId()).toUpperCase();
 
 const makeSutInsert = () => {
   return new InsertBillSqliteRepository();
+};
+
+const makeSutUpdate = () => {
+  return new UpdateBillSqliteRepository();
 };
 
 const makeSutList = () => {
@@ -58,6 +63,27 @@ describe("Bill sqlite repository", () => {
 
     return await sut
       .insert({
+        id: "valid_id",
+        clientId,
+        name: "valid_name",
+        value: "50",
+        expireDate: "2023-01-27T03:00:00.000Z",
+        daysBeforeExpireDateToRemember: "5",
+      })
+      .then((data) => {
+        expect(data.clientId).toEqual(clientId);
+        expect(data.name).toEqual("valid_name");
+        expect(data.value).toEqual("50");
+        expect(data.expireDate).toEqual("2023-01-27T03:00:00.000Z");
+        expect(data.daysBeforeExpireDateToRemember).toEqual("5");
+      });
+  });
+
+  it("Should return a bill when update is success", async () => {
+    const sut = makeSutUpdate();
+
+    return await sut
+      .update({
         id: "valid_id",
         clientId,
         name: "valid_name",
