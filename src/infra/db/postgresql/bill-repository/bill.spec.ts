@@ -2,6 +2,7 @@ import { InsertBillSqliteRepository } from "./insert-bill";
 import { ListBillSqliteRepository } from "./list-bill";
 import { SqliteHelper } from "../helpers/sqlite-helper";
 import ShortUniqueId from "short-unique-id";
+import { DeleteBillSqliteRepository } from "./delete-bill";
 
 const generateId = new ShortUniqueId({ length: 6 });
 const clientId = String(generateId()).toUpperCase();
@@ -12,6 +13,10 @@ const makeSutInsert = () => {
 
 const makeSutList = () => {
   return new ListBillSqliteRepository();
+};
+
+const makeSutDelete = () => {
+  return new DeleteBillSqliteRepository();
 };
 
 describe("Bill sqlite repository", () => {
@@ -26,12 +31,25 @@ describe("Bill sqlite repository", () => {
       "123",
       "4"
     );
+
+    await SqliteHelper.createBill({
+      clientId,
+      id: "valid_bill_id",
+      name: "valid_name",
+      value: "10",
+      expireDate: "2023-01-28T00:00:00.000Z",
+      daysBeforeExpireDateToRemember: "5",
+    });
   });
 
   afterAll(async () => {
     const deleteOlderClients = SqliteHelper.client.client.deleteMany();
+    const deleteOlderBills = SqliteHelper.client.bill.deleteMany();
 
-    await SqliteHelper.client.$transaction([deleteOlderClients]);
+    await SqliteHelper.client.$transaction([
+      deleteOlderClients,
+      deleteOlderBills,
+    ]);
     await SqliteHelper.disconnect();
   });
 
@@ -62,8 +80,16 @@ describe("Bill sqlite repository", () => {
     return await sut.list(clientId).then((data) => {
       expect(data[0].clientId).toEqual(clientId);
       expect(data[0].name).toEqual("valid_name");
-      expect(data[0].value).toEqual("50");
+      expect(data[0].value).toEqual("10");
       expect(data[0].daysBeforeExpireDateToRemember).toEqual("5");
+    });
+  });
+
+  it("Should return a success message when delete is success", async () => {
+    const sut = makeSutDelete();
+
+    return await sut.delete("valid_bill_id").then((message) => {
+      expect(message).toEqual("Bill deleted with sucess!");
     });
   });
 });
