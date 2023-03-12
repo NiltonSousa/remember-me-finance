@@ -67,6 +67,30 @@ export const SqliteHelper = {
     });
   },
 
+  async updateBill(bill: DbInsertBillModel) {
+    const {
+      id,
+      clientId,
+      name,
+      value,
+      expireDate,
+      daysBeforeExpireDateToRemember,
+    } = bill;
+    await this.client.bill.update({
+      where: {
+        id: id,
+      },
+      data: {
+        id,
+        clientId,
+        name,
+        value,
+        expireDate,
+        daysBeforeExpireDateToRemember,
+      },
+    });
+  },
+
   async listBillsToSendEmail(dateNow: string, dateAfter: string) {
     return await this.client.bill.findMany({
       where: {
