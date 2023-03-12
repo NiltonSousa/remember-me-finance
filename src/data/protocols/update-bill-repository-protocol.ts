@@ -1,3 +1,5 @@
+import { BillModel, DbUpdateBillModel } from "./bill-model-protocol";
+
 export interface UpdateBillRepository {
-  update(billId: string): Promise<string>;
+  update(billId: DbUpdateBillModel): Promise<BillModel>;
 }

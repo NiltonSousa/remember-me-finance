@@ -1,11 +1,22 @@
-import { UpdateBillRepository } from "../protocols";
+import {
+  BillModel,
+  UpdateBillRepository,
+  DbUpdateBillModel,
+} from "../protocols/index";
 import { DbUpdateBill } from "./db-update-bill";
 
 const makeUpdateBillRepository = (): UpdateBillRepository => {
   class UpdateBillRepositoryStub implements UpdateBillRepository {
-    async update(billId: string): Promise<string> {
-      const fakeResponse = "Bill updated with success!";
-      return new Promise((resolve) => resolve(fakeResponse));
+    async update(bill: DbUpdateBillModel): Promise<BillModel> {
+      const fakeBill = {
+        id: "valid_id",
+        clientId: "valid_id",
+        name: "valid_name",
+        value: "50",
+        expireDate: "01/01/1999",
+        daysBeforeExpireDateToRemember: "5",
+      };
+      return new Promise((resolve) => resolve(fakeBill));
     }
   }
 
@@ -16,7 +27,6 @@ export interface SutTypes {
   sut: DbUpdateBill;
   updateBillRepositoryStub: UpdateBillRepository;
 }
-
 const makeSut = (): SutTypes => {
   const updateBillRepositoryStub = makeUpdateBillRepository();
   const sut = new DbUpdateBill(updateBillRepositoryStub);
@@ -37,7 +47,16 @@ describe("DbUpdateBill usecase", () => {
         new Promise((resolve, reject) => reject(new Error()))
       );
 
-    const promise = sut.update("valid_bill_id");
+    const billData = {
+      id: "valid_id",
+      clientId: "valid_id",
+      name: "valid_name",
+      value: "50",
+      expireDate: "01/01/1999",
+      daysBeforeExpireDateToRemember: "5",
+    };
+
+    const promise = sut.update(billData);
 
     await expect(promise).rejects.toThrow();
   });
@@ -45,18 +64,50 @@ describe("DbUpdateBill usecase", () => {
   it("Should call UpdateBillRepository with correct values", async () => {
     const { sut, updateBillRepositoryStub } = makeSut();
 
-    const updateSpy = jest.spyOn(updateBillRepositoryStub, "update");
+    const insertSpy = jest.spyOn(updateBillRepositoryStub, "update");
 
-    await sut.update("valid_bill_id");
+    const billData = {
+      id: "valid_id",
+      clientId: "valid_id",
+      name: "valid_name",
+      value: "50",
+      expireDate: "01/01/1999",
+      daysBeforeExpireDateToRemember: "5",
+    };
 
-    expect(updateSpy).toHaveBeenCalledWith("valid_bill_id");
+    await sut.update(billData);
+
+    expect(insertSpy).toHaveBeenCalledWith({
+      id: "valid_id",
+      clientId: "valid_id",
+      name: "valid_name",
+      value: "50",
+      expireDate: "01/01/1999",
+      daysBeforeExpireDateToRemember: "5",
+    });
   });
 
-  it("Should return success message when update is a success", async () => {
+  it("Should return an bill when success", async () => {
     const { sut } = makeSut();
 
-    const message = await sut.update("valid_bill_id");
+    const billData = {
+      id: "valid_id",
+      clientId: "valid_id",
+      name: "valid_name",
+      value: "50",
+      expireDate: "01/01/1999",
+      daysBeforeExpireDateToRemember: "5",
+    };
 
-    expect(message).toEqual("Bill updated with success!");
+    const bill = await sut.update(billData);
+
+    expect(bill).toEqual({
+      id: "valid_id",
+      clientId: "valid_id",
+      name: "valid_name",
+      value: "50",
+      expireDate: "01/01/1999",
+      daysBeforeExpireDateToRemember: "5",
+    });
   });
 });

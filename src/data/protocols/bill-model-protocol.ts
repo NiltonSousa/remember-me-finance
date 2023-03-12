@@ -15,6 +15,15 @@ export interface DbInsertBillModel {
   daysBeforeExpireDateToRemember: string;
 }
 
+export interface DbUpdateBillModel {
+  id: string;
+  clientId: string;
+  name: string;
+  value: string;
+  expireDate: string;
+  daysBeforeExpireDateToRemember: string;
+}
+
 export interface InsertBillModel {
   insert(bill: DbInsertBillModel): Promise<BillModel>;
 }
@@ -28,5 +37,5 @@ export interface DeleteBillModel {
 }
 
 export interface UpdateBillModel {
-  update(billId: string): Promise<string>;
+  update(billId: DbUpdateBillModel): Promise<BillModel>;
 }
