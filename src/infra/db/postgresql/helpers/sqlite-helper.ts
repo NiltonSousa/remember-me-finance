@@ -57,6 +57,16 @@ export const SqliteHelper = {
     });
   },
 
+  async deleteBill(billId: string) {
+    return await this.client.bill.deleteMany({
+      where: {
+        id: {
+          equals: billId,
+        },
+      },
+    });
+  },
+
   async listBillsToSendEmail(dateNow: string, dateAfter: string) {
     return await this.client.bill.findMany({
       where: {
