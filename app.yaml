@@ -1,0 +1,7 @@
+runtime: nodejs16
+env_variables:
+  PORT: 8080
+  DATABASE_URL: "postgresql://postgres:Youse1510*@10.83.48.3:5432/database_local?schema=public"
+  JWT_SECRET: "6c67b219-917e-49ec-8c59-d2a5648b1324"
+vpc_access_connector:
+  name: projects/remember-me-376114/locations/us-east1/connectors/vpc-connector
