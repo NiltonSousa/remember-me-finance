@@ -150,7 +150,11 @@ export const SqliteHelper = {
         },
       });
     } else {
-      return await this.client.client.findMany({});
+      return await this.client.client.findMany({
+        include: {
+          rating: true,
+        },
+      });
     }
   },
 
