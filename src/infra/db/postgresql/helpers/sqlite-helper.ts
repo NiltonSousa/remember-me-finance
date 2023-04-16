@@ -91,13 +91,10 @@ export const SqliteHelper = {
     });
   },
 
-  async listBillsToSendEmail(dateNow: string, dateAfter: string) {
+  async listBillsToSendEmail(targetDate: number) {
     return await this.client.bill.findMany({
       where: {
-        expireDate: {
-          lte: new Date(dateAfter),
-          gte: new Date(dateNow),
-        },
+        expireDate: targetDate.toString(),
       },
       include: {
         notification: true,

@@ -5,17 +5,9 @@ import nodemailer from "nodemailer";
 
 export class SendEmailInfraNotifier implements SendEmailNotifier {
   async send(): Promise<string> {
-    const dateNow = new Date();
-    dateNow.setHours(0, 0, 0, 0);
+    const targetDate = new Date().getDate() + 1;
 
-    const dateAfter = new Date();
-    dateAfter.setDate(dateAfter.getDate() + 1);
-    dateAfter.setHours(0, 0, 0, 0);
-
-    const reponse = await SqliteHelper.listBillsToSendEmail(
-      dateNow.toISOString(),
-      dateAfter.toISOString()
-    );
+    const reponse = await SqliteHelper.listBillsToSendEmail(targetDate);
 
     for (const item of reponse) {
       const emailOptions: SendEmailOptionsModel = {
