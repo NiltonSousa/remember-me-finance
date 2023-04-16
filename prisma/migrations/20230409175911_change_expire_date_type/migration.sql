@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Bill" ALTER COLUMN "expireDate" SET DATA TYPE TEXT;
