@@ -1,0 +1,317 @@
+openapi: 3.0.3
+info:
+  title: Remember Me Finance
+  description: |-
+    This project is the academic solution, based in personal necessity when always forgot my expediture. With this I decided create this solution to insert all expediture and the Web Site remember me when valid date arrive.
+  version: 1.0.11
+servers:
+  - url: http://localhost:8080
+tags:
+  - name: bill
+    description: CRUD Bill
+  - name: client
+    description: Create and read Client
+  - name: rating
+    description: Create Rating
+paths:
+  /bill:
+    post:
+      tags:
+        - bill
+      summary: Create bill
+      description: Create bill
+      requestBody:
+        description: Create bill
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                clientId:
+                  type: string
+                  example: "ATDALS"
+                name:
+                  type: string
+                  example: "Conta de Luz"
+                value:
+                  type: string
+                  example: "50"
+                expireDate:
+                  type: string
+                  example: "10"
+                daysBeforeExpireDateToRemember:
+                  type: string
+                  example: "5"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "ATDALS"
+                  clientId:
+                    type: string
+                    example: "ATDALS"
+                  name:
+                    type: string
+                    example: "Conta de Luz"
+                  value:
+                    type: string
+                    example: "50"
+                  expireDate:
+                    type: string
+                    example: "10"
+                  daysBeforeExpireDateToRemember:
+                    type: string
+                    example: "5"
+        "500":
+          description: Server Error
+    put:
+      tags:
+        - bill
+      summary: Update an existing bill
+      description: Update an existing bill
+      requestBody:
+        description: Update an existent bill
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: "ATDALS"
+                clientId:
+                  type: string
+                  example: "ATDALS"
+                name:
+                  type: string
+                  example: "Conta de Luz"
+                value:
+                  type: string
+                  example: "50"
+                expireDate:
+                  type: string
+                  example: "10"
+                daysBeforeExpireDateToRemember:
+                  type: string
+                  example: "5"
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "ATDALS"
+                  clientId:
+                    type: string
+                    example: "ATDALS"
+                  name:
+                    type: string
+                    example: "Conta de Luz"
+                  value:
+                    type: string
+                    example: "50"
+                  expireDate:
+                    type: string
+                    example: "10"
+                  daysBeforeExpireDateToRemember:
+                    type: string
+                    example: "5"
+        "500":
+          description: Server Error
+    get:
+      tags:
+        - bill
+      summary: Finds Bill by clientId
+      description: Returns a bill list
+      parameters:
+        - name: clientId
+          in: query
+          description: Client id of exist client
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "ATDALS"
+                    clientId:
+                      type: string
+                      example: "ATDALS"
+                    name:
+                      type: string
+                      example: "Conta de Luz"
+                    value:
+                      type: string
+                      example: "50"
+                    expireDate:
+                      type: string
+                      example: "10"
+                    daysBeforeExpireDateToRemember:
+                      type: string
+                      example: "5"
+        "500":
+          description: Server Error
+    delete:
+      tags:
+        - bill
+      summary: Deletes a bill
+      description: delete a bill
+      parameters:
+        - name: billId
+          in: query
+          description: "BillId of exist bill from client"
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Contains a string indicating sucess on delete operation
+
+  /client:
+    post:
+      tags:
+        - client
+      summary: Create client
+      description: Create client to use the system
+      requestBody:
+        description: Create client
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - birthdate
+                - email
+                - phoneNumber
+                - billsCount
+              properties:
+                name:
+                  type: string
+                  example: "Cleyton"
+                birthdate:
+                  type: string
+                  example: "1999/10/10"
+                cpf:
+                  type: string
+                  example: ""
+                email:
+                  type: string
+                  example: "cleyton@mail.com"
+                phoneNumber:
+                  type: string
+                  example: "11989536474"
+                billsCount:
+                  type: string
+                  example: "5"
+                password:
+                  type: string
+                  example: "******"
+                isAdmin:
+                  type: boolean
+                  example: true
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "ATDALS"
+                  name:
+                    type: string
+                    example: "Cleyton"
+                  cpf:
+                    type: string
+                    example: ""
+                  email:
+                    type: string
+                    example: "cleyton@mail.com"
+                  phoneNumber:
+                    type: string
+                    example: "11989536474"
+                  billsCount:
+                    type: string
+                    example: "5"
+        "500":
+          description: Server Error
+    get:
+      tags:
+        - client
+      summary: Finds client by clientId or email
+      description: Returns a client
+      parameters:
+        - name: clientId
+          in: query
+          description: Client id of exist client
+          schema:
+            type: string
+        - name: email
+          in: query
+          description: Email of exist client
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                      example: "ASDASD"
+                    name:
+                      type: string
+                      example: "Cleyton"
+                    birthdate:
+                      type: string
+                      example: "1999/10/10"
+                    cpf:
+                      type: string
+                      example: ""
+                    email:
+                      type: string
+                      example: "cleyton@mail.com"
+                    phoneNumber:
+                      type: string
+                      example: "11989536474"
+                    billsCount:
+                      type: string
+                      example: "5"
+                    password:
+                      type: string
+                      example: "******"
+                    isAdmin:
+                      type: boolean
+                      example: true
+        "500":
+          description: Server Error
