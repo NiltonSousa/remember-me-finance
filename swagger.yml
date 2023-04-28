@@ -315,3 +315,48 @@ paths:
                       example: true
         "500":
           description: Server Error
+
+  /rating:
+    post:
+      tags:
+        - rating
+      summary: Create a rating
+      description: Create a rating when the client want rate system
+      requestBody:
+        description: Create rating
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - clientId
+                - grade
+              properties:
+                clientId:
+                  type: string
+                  example: "ASDASD"
+                grade:
+                  type: string
+                  example: "3"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "ATDALS"
+                  clientId:
+                    type: string
+                    example: "ASDASD"
+                  grade:
+                    type: string
+                    example: "3"
+                  insertedAt:
+                    type: string
+                    example: "2023/10/01"
+        "500":
+          description: Server Error
