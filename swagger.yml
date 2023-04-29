@@ -12,7 +12,11 @@ tags:
   - name: client
     description: Create and read Client
   - name: rating
-    description: Create Rating
+    description: Create
+  - name: notification
+    description: Create Notification
+  - name: auth
+    description: Authenticate admin password
 paths:
   /bill:
     post:
@@ -358,5 +362,87 @@ paths:
                   insertedAt:
                     type: string
                     example: "2023/10/01"
+        "500":
+          description: Server Error
+
+  /notification:
+    post:
+      tags:
+        - notification
+      summary: Create a notification
+      description: Create a notification to scheduler bill notification
+      requestBody:
+        description: Create notification
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - billId
+                - type
+                - message
+              properties:
+                billId:
+                  type: string
+                  example: "ASDASD"
+                type:
+                  type: string
+                  example: "email"
+                message:
+                  type: string
+                  example: "Conta de luz"
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "ATDALS"
+                  billId:
+                    type: string
+                    example: "ASDASD"
+                  type:
+                    type: string
+                    example: "email"
+                  message:
+                    type: string
+                    example: "Conta de luz"
+        "500":
+          description: Server Error
+
+  /auth:
+    get:
+      tags:
+        - auth
+      summary: Authenticate admin password
+      description: Authenticate admin password
+      parameters:
+        - name: encryptedPassword
+          in: query
+          description: database admin password encrypted
+          schema:
+            type: string
+        - name: passwordToCompare
+          in: query
+          description: password digited when try admin login
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    authorized:
+                      type: boolean
+                      example: true
         "500":
           description: Server Error
